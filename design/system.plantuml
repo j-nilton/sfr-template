@@ -1,0 +1,45 @@
+@startuml
+class FilaInterna {
+    +aluno: Aluno[]
+}
+
+class FilaExterna {
+    +aluno: Aluno[]
+}
+
+class Aluno {
+    +nome: string
+    +matricula: string
+}
+
+class Refeitorio {
+    +id: int
+    +nome: string
+    +capacidade: int
+}
+
+class Catraca {
+    +id: int
+    +status: string
+}
+
+class Mesa {
+    +quantidadeMaxima: int
+    +quantidadeAtual: int
+}
+
+class Atendimento {
+    +id: int
+    +dataHora: string
+    +status: string
+}
+
+
+
+FilaInterna -- "1..*" Aluno : "está na fila"
+FilaExterna -- "1..*" Aluno : "está na fila"
+Refeitorio -- "1..*" Mesa : "possui"
+Refeitorio -- "1..*" Atendimento : "oferece atendimento"
+Atendimento -- "1" Catraca : "utiliza"
+
+@enduml
