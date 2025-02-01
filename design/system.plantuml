@@ -1,45 +1,73 @@
-@startuml
-class FilaInterna {
-    +aluno: Aluno[]
+@startuml Gerenciador para Refeitorio 
+class Aluno {
+    +id: string
+    +tempoEntradaFilaExterna: float
+    +tempoNaCatraca: float
+    +tempoServico: float
+    +tempoPermanenciaMesa: float
 }
 
 class FilaExterna {
-    +aluno: Aluno[]
-}
-
-class Aluno {
-    +nome: string
-    +matricula: string
-}
-
-class Refeitorio {
-    +id: int
-    +nome: string
-    +capacidade: int
+    +alunos: Aluno[]
+    +distribuicaoChegada: string
+    +intervaloAtendimento: float
+    +adicionarAluno(aluno: Aluno): void
+    +removerAluno(): Aluno
 }
 
 class Catraca {
-    +id: int
-    +status: string
+    +alunoAtual: Aluno
+    +tempoMedioDigitacao: float
+    +limiteFilaInterna: int
+    +quantidadeAlunosParaLiberar: int
+    +bloqueada: boolean
+    +verficaSeTemAlguem(aluno: Aluno): boolean
+    +registrarEntrada(aluno: Aluno): void
+    
 }
 
-class Mesa {
-    +quantidadeMaxima: int
-    +quantidadeAtual: int
+class FilaInterna {
+    +alunos: Aluno[]
+    +limiteFilaInterna: int
+    +adicionarAluno(aluno: Aluno): boolean
+    +removerAluno(): Aluno
 }
 
 class Atendimento {
-    +id: int
-    +dataHora: string
-    +status: string
+    +funcionariosDisponiveis: int
+    +tempoMedioServico: float
+    +distribuicaoServico: string
+    +atenderAluno(aluno: Aluno): void
 }
 
+class Mesa {
+    +limite: int
+    +quantidadeOcupada: int
+    +tempoMedioPermanencia: float
+    +distribuicaoPermanencia: string
+    +adicionarAluno(aluno: Aluno): boolean
+    +removerAluno(): void
+}
 
+class Refeitorio {
+    +filaExterna: FilaExterna
+    +catraca: Catraca
+    +filaInterna: FilaInterna
+    +atendimento: Atendimento
+    +mesas: Mesa[]
+    +limiteMesas: int
+    +iniciarSimulacao(): void
+    +verificarDisponibilidade(): void
+}
 
-FilaInterna -- "1..*" Aluno : "está na fila"
-FilaExterna -- "1..*" Aluno : "está na fila"
+FilaExterna -- "1..*" Aluno : "contém"
+FilaInterna -- "1..*" Aluno : "contém"
+Catraca -- "1" Aluno : "registra entrada"
+Atendimento -- "1" Aluno: "atende"
+Mesa -- "1..*" Aluno : "tem"
+Refeitorio -- "1" FilaExterna : "possui"
+Refeitorio -- "1" Catraca : "possui"
+Refeitorio -- "1" FilaInterna : "possui"
+Refeitorio -- "1" Atendimento : "possui"
 Refeitorio -- "1..*" Mesa : "possui"
-Refeitorio -- "1..*" Atendimento : "oferece atendimento"
-Atendimento -- "1" Catraca : "utiliza"
-
 @enduml
