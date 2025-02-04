@@ -1,51 +1,57 @@
 @startuml Gerenciador para Refeitorio 
 class Aluno {
     +id: string
-    +tempoEntradaFilaExterna: float
-    +tempoNaCatraca: float
-    +tempoServico: float
-    +tempoPermanenciaMesa: float
+    +instanteDeChegada: number | undefined
+    +tempoFilaExterna: number
+    +tempoNaCatraca: number
+    +tempoFilaInterna: number
+    +tempoDeAtendimento: number
+    +tempoPermanenciaMesa: number
 }
 
 class FilaExterna {
-    +alunos: Aluno[]
+    +alunos: Aluno[]  = []
     +distribuicaoChegada: string
-    +intervaloAtendimento: float
-    +adicionarAluno(aluno: Aluno): void
+    +adicionarAlunoFilaExterna(aluno: Aluno): void
     +removerAluno(): Aluno
 }
 
 class Catraca {
-    +alunoAtual: Aluno
-    +tempoMedioDigitacao: float
-    +limiteFilaInterna: int
-    +quantidadeAlunosParaLiberar: int
+    +alunoAtual: Aluno | undefined
+    +tempoDePermanencia: number
+    +limiteFilaInterna: number
+    +quantidadeAlunosParaLiberar: number
     +bloqueada: boolean
+    +estaOcupada: boolean
     +verficaSeTemAlguem(aluno: Aluno): boolean
+    +adicionarAlunoCatraca(aluno: Aluno): void
     +registrarEntrada(aluno: Aluno): void
-    
+    +removerAlunoCatraca(): Aluno
 }
 
 class FilaInterna {
-    +alunos: Aluno[]
-    +limiteFilaInterna: int
-    +adicionarAluno(aluno: Aluno): boolean
+    +alunos: Aluno[] = []
+    +limiteFilaInterna: number
+    +tamanhoDaFila: number
+    +adicionarAlunoFilaInterna(aluno: Aluno): boolean
     +removerAluno(): Aluno
 }
 
 class Atendimento {
-    +funcionariosDisponiveis: int
-    +tempoMedioServico: float
+    +tempoMedioServico: number
     +distribuicaoServico: string
+    +estaLiberado: boolean
+    +verificaSeTemAlguem(aluno: Aluno): boolean
+    +adicionarAlunoAtendimento(aluno: Aluno): void
     +atenderAluno(aluno: Aluno): void
 }
 
 class Mesa {
-    +limite: int
-    +quantidadeOcupada: int
-    +tempoMedioPermanencia: float
+    +limite: number
+    +quantidadeOcupada: number
+    +tempoMedioPermanencia: number
     +distribuicaoPermanencia: string
-    +adicionarAluno(aluno: Aluno): boolean
+    +adicionarAlunoMesa(aluno: Aluno): boolean
     +removerAluno(): void
 }
 
@@ -55,7 +61,6 @@ class Refeitorio {
     +filaInterna: FilaInterna
     +atendimento: Atendimento
     +mesas: Mesa[]
-    +limiteMesas: int
     +iniciarSimulacao(): void
     +verificarDisponibilidade(): void
 }
