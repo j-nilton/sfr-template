@@ -1,68 +1,68 @@
-@startuml Gerenciador para Refeitorio 
+@startuml Arquivo Sistema
 class Aluno {
-    +id: string
-    +instanteDeChegada: number | undefined
-    +tempoFilaExterna: number
-    +tempoNaCatraca: number
-    +tempoFilaInterna: number
-    +tempoDeAtendimento: number
-    +tempoPermanenciaMesa: number
+    -id: string
+    -instanteDeChegada: number | undefined
+    -tempoFilaExterna: number
+    -tempoNaCatraca: number
+    -tempoFilaInterna: number
+    -tempoDeAtendimento: number
+    -tempoPermanenciaMesa: number
 }
 
 class FilaExterna {
-    +alunos: Aluno[]  = []
-    +distribuicaoChegada: string
+    -alunos: Aluno[]  = []
+    -distribuicaoChegada: string
     +adicionarAlunoFilaExterna(aluno: Aluno): void
     +removerAluno(): Aluno
 }
 
 class Catraca {
-    +alunoAtual: Aluno | undefined
-    +tempoDePermanencia: number
-    +limiteFilaInterna: number
-    +quantidadeAlunosParaLiberar: number
-    +bloqueada: boolean
-    +estaOcupada: boolean
-    +verficaSeTemAlguem(aluno: Aluno): boolean
+    -alunoAtual: Aluno | undefined
+    -tempoDePermanencia: number
+    -limiteFilaInterna: number
+    -quantidaDeAlunosParaLiberar: number
+    -bloqueio: boolean
+    -estaOcupada: boolean
+    -verficarSeTemAlguem(aluno: Aluno): boolean
     +adicionarAlunoCatraca(aluno: Aluno): void
     +registrarEntrada(aluno: Aluno): void
     +removerAlunoCatraca(): Aluno
 }
 
 class FilaInterna {
-    +alunos: Aluno[] = []
-    +limiteFilaInterna: number
-    +tamanhoDaFila: number
+    -alunos: Aluno[] = []
+    -limiteFilaInterna: number
+    -tamanhoDaFila: number
     +adicionarAlunoFilaInterna(aluno: Aluno): boolean
     +removerAluno(): Aluno
 }
 
 class Atendimento {
-    +tempoMedioServico: number
-    +distribuicaoServico: string
-    +estaLiberado: boolean
-    +verificaSeTemAlguem(aluno: Aluno): boolean
+    -tempoMedioServico: number
+    -distribuicaoServico: string
+    -estaLiberado: boolean
+    -verificaSeTemAlguem(aluno: Aluno): boolean
     +adicionarAlunoAtendimento(aluno: Aluno): void
     +atenderAluno(aluno: Aluno): void
 }
 
 class Mesa {
-    +limite: number
-    +quantidadeOcupada: number
-    +tempoMedioPermanencia: number
-    +distribuicaoPermanencia: string
+    -limite: number
+    -quantidadeOcupada: number
+    -tempoMedioPermanencia: number
+    -distribuicaoPermanencia: string
     +adicionarAlunoMesa(aluno: Aluno): boolean
     +removerAluno(): void
 }
 
 class Refeitorio {
-    +filaExterna: FilaExterna
-    +catraca: Catraca
-    +filaInterna: FilaInterna
-    +atendimento: Atendimento
-    +mesas: Mesa[]
-    +iniciarSimulacao(): void
-    +verificarDisponibilidade(): void
+    -filaExterna: FilaExterna
+    -catraca: Catraca
+    -filaInterna: FilaInterna
+    -atendimento: Atendimento
+    -mesas: Mesa[]
+    -iniciarSimulacao(): void
+    -verificarDisponibilidade(): void
 }
 
 FilaExterna -- "1..*" Aluno : "contém"
