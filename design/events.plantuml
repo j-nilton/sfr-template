@@ -1,4 +1,4 @@
-@startuml Gerenciador para Refeitorio 
+@startuml Gerenciador de Eventos do Sistema
 class MaquinaDeEventos {
     -eventos: Evento[] = []
     -instanteDeSimulacao = 0
@@ -9,30 +9,34 @@ class MaquinaDeEventos {
 }
 
 class Evento{
-    timeStamp: number
-    refeitorio: Refeitorio 
-    maquinaEventos: MaquinaDeEventos
+    #timeStamp: number
+    #refeitorio: Refeitorio 
+    #maquinaEventos: MaquinaDeEventos
     +getTimeStamp(): number
-
+    +processarEvento(): void 
 }
 
-class ChegadaFilaExterna extends Evento{
+class ChegadaAlunoFilaExterna extends Evento{
     +processarEvento(): void
 }
 
-class PassarPelaCatraca extends Evento{
+class PassarAlunoParaCatraca extends Evento{
     +processarEvento(): void
 }
 
-class PassarParaFilaInterna extends Evento{
+class PassarAlunoParaFilaInterna extends Evento{
     +processarEvento(): void
 }
 
-class ChegadaNoAtendimento extends Evento{
+class ChegadaAlunoAtendimento extends Evento{
     +processarEvento(): void
 }
 
-class IrParaMesa extends Evento{
+class FinalizarAtendimentoAluno extends Evento{
+    +processarEvento(): void
+}
+
+class PassarAlunoMesa extends Evento{
     +processarEvento(): void
 }
 

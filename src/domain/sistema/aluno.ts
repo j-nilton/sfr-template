@@ -35,7 +35,6 @@ export class Aluno{
         return this.tempoDeAtendimento; 
     }
 
-    public 
     public getTempoPermanenciaMesa() : number {
         return this.tempoPermanenciaMesa; 
     }

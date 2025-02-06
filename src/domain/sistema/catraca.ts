@@ -1,4 +1,5 @@
-import { Aluno } from "./aluno"; // Importando a classe Aluno de aluno.ts
+import { Aluno } from "./aluno"; 
+import { FilaInterna } from "./fila-interna";
 
 export class Catraca {
     private alunoAtual: Aluno | undefined;
@@ -71,46 +72,30 @@ export class Catraca {
         this.estaOcupada = ocupada;
     }
 
-    // Verifica se o aluno está presente na catraca
-    public verficarSeTemAlguem(aluno: Aluno): boolean {
-        return this.alunoAtual !== undefined && this.alunoAtual.getId() === aluno.getId();
-    }
-
     // Adiciona um aluno à catraca
     public adicionarAlunoCatraca(aluno: Aluno): void {
-        if (this.alunoAtual === undefined) {
-            this.alunoAtual = aluno;
-            this.estaOcupada = true;
-            console.log(`Aluno ${aluno.getId()} entrou na catraca.`);
-        } else {
-            console.log(`Catraca já ocupada por outro aluno.`);
+        if(aluno !== undefined){
+            throw new Error("Você está tentando adicionar um aluno em uma catraca ocupada!"); 
         }
-    }
-
-    // Registra a entrada do aluno na catraca
-    public registrarEntrada(aluno: Aluno): void {
-        if (this.alunoAtual === undefined) {
-            console.log(`Não há aluno para registrar a entrada.`);
-            return;
-        }
-
-        if (this.alunoAtual.getId() === aluno.getId()) {
-            console.log(`Entrada registrada para o aluno ${aluno.getId()}.`);
-        } else {
-            console.log(`Aluno ${aluno.getId()} não está na catraca.`);
-        }
+        this.alunoAtual = aluno; 
     }
 
     // Remove o aluno da catraca
     public removerAlunoCatraca(): Aluno | undefined {
-        const alunoRemovido = this.alunoAtual;
-        if (this.alunoAtual) {
-            console.log(`Aluno ${alunoRemovido.getId()} removido da catraca.`);
-            this.alunoAtual = undefined;
-            this.estaOcupada = false;
-            return alunoRemovido;
+       if(this.alunoAtual === undefined){
+        throw new Error("Você está tentando remover um aluno de uma catraca vazia!"); 
+       }
+        const alunoRemovido = this.alunoAtual; 
+        this.alunoAtual = undefined;
+        this.estaOcupada = false;
+        return alunoRemovido;
+    }
+
+    public bloquearCatraca(limiteFilaInterna: number, filaInterna: FilaInterna): void {
+        if (filaInterna.getTamanhoFila() >= limiteFilaInterna) {
+            this.bloqueio = true;
+        } else {
+            this.bloqueio = false;
         }
-        console.log("Nenhum aluno para remover.");
-        return undefined;
     }
 }

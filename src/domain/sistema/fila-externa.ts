@@ -31,25 +31,13 @@ export class FilaExterna {
     // Método para adicionar um aluno à fila externa
     public adicionarAlunoFilaExterna(aluno: Aluno): void {
         this.alunos.push(aluno);
-        console.log(`Aluno ${aluno.getId()} adicionado à fila externa.`);
     }
 
     // Método para remover um aluno da fila externa
-    public removerAluno(): Aluno | undefined {
+    public removerAluno(): Aluno {
         if (this.alunos.length === 0) {
-            console.log("A fila externa está vazia.");
-            return undefined;
+            throw new Error("Você está tentando remover um aluno de uma fila vazia"); 
         }
-        const alunoRemovido = this.alunos.shift(); // Remove o primeiro aluno da fila
-        if (alunoRemovido) {
-            console.log(`Aluno ${alunoRemovido.getId()} removido da fila externa.`);
-            return alunoRemovido;
-        }
-        return undefined;
-    }
-
-    // Método para verificar o tamanho da fila externa
-    public getTamanhoFila(): number {
-        return this.alunos.length;
+        return this.alunos.shift()!; // Remove o primeiro aluno da fila
     }
 }

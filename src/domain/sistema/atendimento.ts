@@ -56,25 +56,12 @@ export class Atendimento {
 
     // Adiciona um aluno ao atendimento
     public adicionarAlunoAtendimento(aluno: Aluno): void {
-        if (!this.alunoAtual) {
-            this.alunoAtual = aluno;
-            console.log(`Aluno ${aluno.getId()} adicionado ao atendimento.`);
-        } else {
-            console.log(`Já existe um aluno sendo atendido. Não é possível adicionar outro aluno.`);
-        }
+       
     }
 
     // Realiza o atendimento do aluno
     public atenderAluno(aluno: Aluno): void {
-        if (this.alunoAtual && this.alunoAtual.getId() === aluno.getId()) {
-            console.log(`Iniciando atendimento do aluno ${aluno.getId()}...`);
-            // A simulação do tempo de serviço pode ser feita aqui (com base na distribuição de serviço)
-            console.log(`Atendimento finalizado para o aluno ${aluno.getId()}.`);
-            this.alunoAtual = undefined; // Após o atendimento, o aluno sai
-            this.estaLiberado = true; // O atendimento foi liberado
-        } else {
-            console.log(`Nenhum aluno encontrado para atendimento ou aluno não está na fila.`);
-        }
+        
     }
 
     // Método para verificar se o atendimento está liberado

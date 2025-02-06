@@ -55,23 +55,11 @@ export class Mesa {
 
     // Adiciona um aluno à mesa se não ultrapassar o limite
     public adicionarAlunoMesa(aluno: Aluno): boolean {
-        if (this.quantidadeOcupada < this.limite) {
-            this.quantidadeOcupada++;
-            console.log(`Aluno ${aluno.getId()} adicionado à mesa.`);
-            return true;
-        } else {
-            console.log(`A mesa está cheia. Não é possível adicionar o aluno ${aluno.getId()}.`);
-            return false;
-        }
+        return
     }
 
     // Remove um aluno da mesa
     public removerAluno(): void {
-        if (this.quantidadeOcupada > 0) {
-            this.quantidadeOcupada--;
-            console.log("Um aluno foi removido da mesa.");
-        } else {
-            console.log("A mesa já está vazia.");
-        }
+
     }
 }

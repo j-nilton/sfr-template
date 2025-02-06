@@ -1,4 +1,4 @@
-@startuml Arquivo Sistema
+@startuml Sistema 
 class Aluno {
     -id: string
     -instanteDeChegada: number | undefined
@@ -12,6 +12,7 @@ class Aluno {
 class FilaExterna {
     -alunos: Aluno[]  = []
     -distribuicaoChegada: string
+    -verficarSeTemAlguem(aluno: Aluno): void
     +adicionarAlunoFilaExterna(aluno: Aluno): void
     +removerAluno(): Aluno
 }
@@ -23,10 +24,9 @@ class Catraca {
     -quantidaDeAlunosParaLiberar: number
     -bloqueio: boolean
     -estaOcupada: boolean
-    -verficarSeTemAlguem(aluno: Aluno): boolean
     +adicionarAlunoCatraca(aluno: Aluno): void
-    +registrarEntrada(aluno: Aluno): void
     +removerAlunoCatraca(): Aluno
+    +bloquearCatraca(): void 
 }
 
 class FilaInterna {
@@ -41,7 +41,6 @@ class Atendimento {
     -tempoMedioServico: number
     -distribuicaoServico: string
     -estaLiberado: boolean
-    -verificaSeTemAlguem(aluno: Aluno): boolean
     +adicionarAlunoAtendimento(aluno: Aluno): void
     +atenderAluno(aluno: Aluno): void
 }
