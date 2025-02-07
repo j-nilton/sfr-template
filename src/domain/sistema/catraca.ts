@@ -85,17 +85,9 @@ export class Catraca {
        if(this.alunoAtual === undefined){
         throw new Error("Você está tentando remover um aluno de uma catraca vazia!"); 
        }
-        const alunoRemovido = this.alunoAtual; 
+        let alunoRemovido = this.alunoAtual; 
         this.alunoAtual = undefined;
         this.estaOcupada = false;
         return alunoRemovido;
-    }
-
-    public bloquearCatraca(limiteFilaInterna: number, filaInterna: FilaInterna): void {
-        if (filaInterna.getTamanhoFila() >= limiteFilaInterna) {
-            this.bloqueio = true;
-        } else {
-            this.bloqueio = false;
-        }
-    }
+    }                                                                                 
 }

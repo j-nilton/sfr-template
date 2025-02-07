@@ -18,16 +18,6 @@ export class FilaExterna {
         this.alunos = alunos;
     }
 
-    // Getter para distribuicaoChegada
-    public getDistribuicaoChegada(): string {
-        return this.distribuicaoChegada;
-    }
-
-    // Setter para distribuicaoChegada
-    public setDistribuicaoChegada(distribuicaoChegada: string): void {
-        this.distribuicaoChegada = distribuicaoChegada;
-    }
-
     // Método para adicionar um aluno à fila externa
     public adicionarAlunoFilaExterna(aluno: Aluno): void {
         this.alunos.push(aluno);

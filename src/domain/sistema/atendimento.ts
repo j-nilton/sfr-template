@@ -49,23 +49,21 @@ export class Atendimento {
         this.alunoAtual = aluno;
     }
 
-    // Verifica se o aluno está sendo atendido
-    public verificaSeTemAlguem(aluno: Aluno): boolean {
-        return this.alunoAtual !== undefined && this.alunoAtual.getId() === aluno.getId();
-    }
-
     // Adiciona um aluno ao atendimento
     public adicionarAlunoAtendimento(aluno: Aluno): void {
-       
-    }
-
-    // Realiza o atendimento do aluno
-    public atenderAluno(aluno: Aluno): void {
+            if(aluno !== undefined){
+                throw new Error("Você está tentando adicionar um aluno em um atendimento ocupado"); 
+            }
         
+        this.alunoAtual = aluno; 
     }
 
-    // Método para verificar se o atendimento está liberado
-    public taLiberado(): boolean {
-        return this.estaLiberado;
+    // Finaliza o atendimento do aluno, removendo-o
+    public removerAluno(aluno: Aluno): void {
+        if(this.getAlunoAtual === undefined){
+            throw new Error("Você está tentando remover um aluno de um lugar vazio"); 
+        }
+        this.alunoAtual = undefined; 
+        this.estaLiberado = false; 
     }
 }

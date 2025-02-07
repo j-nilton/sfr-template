@@ -1,4 +1,4 @@
-import { Aluno } from "./aluno"; // Importando a classe Aluno de aluno.ts
+import { Aluno } from "./aluno"; 
 
 export class FilaInterna {
     private alunos: Aluno[] = [];
@@ -43,11 +43,14 @@ export class FilaInterna {
 
     // Adiciona um aluno na fila interna se não ultrapassar o limite
     public adicionarAlunoFilaInterna(aluno: Aluno): boolean {
-       return 
+       return
     }
 
     // Remove o primeiro aluno da fila interna
     public removerAluno(): Aluno {
-        return
+        if(this.alunos.length == 0){
+            throw new Error("Você está tentando remover um aluno de uma fila vazia"); 
+        }
+        return this.alunos.shift(); 
     }
 }
