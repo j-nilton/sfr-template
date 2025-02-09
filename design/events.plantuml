@@ -52,10 +52,7 @@ class desbloquearCatraca extends Evento{
 class bloquearAtendimento extends Evento{
     +processarEvento(): void
 }
-
-class desbloquearCatraca extends Evento{
-    +processarEvento(): void
-}   
+ 
 
 MaquinaDeEventos -- "1..*" Evento
 Evento -- "1..1" MaquinaDeEventos
