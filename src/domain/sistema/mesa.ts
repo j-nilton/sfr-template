@@ -1,16 +1,36 @@
 import { Aluno } from "./aluno"; // Importando a classe Aluno de aluno.ts
 
 export class Mesa {
-    private limite: number;
-    private quantidadeOcupada: number;
-    private tempoMedioPermanencia: number;
-    private distribuicaoPermanencia: string;
+    /**
+     * Alunos que estão ocupando as mesas
+     */
+    private alunos: Aluno[] = []; 
 
-    constructor(limite: number, tempoMedioPermanencia: number, distribuicaoPermanencia: string) {
+    /**
+     * LM (Limite de Mesas).
+     */
+    private limite: number;
+
+    /**
+     * Média de tempo que os alunos permanecem na mesa comendo
+     */
+    private tempoMedioPermanencia: number;
+
+    /**
+     * 
+     * @param alunos - Alunos que estão ocupando as mesas
+     * @param limite - LM (Limite de Mesas).
+     * @param tempoMedioPermanencia - Média de tempo que os alunos permanecem na mesa comendo
+     */
+    constructor(alunos: Aluno[], limite: number, tempoMedioPermanencia: number) {
+        this.alunos = alunos;
         this.limite = limite;
-        this.quantidadeOcupada = 0;
         this.tempoMedioPermanencia = tempoMedioPermanencia;
-        this.distribuicaoPermanencia = distribuicaoPermanencia;
+    }
+
+    // Getter para alunos
+    public getAlunos(): Aluno[] {
+        return this.alunos;
     }
 
     // Getter para limite
@@ -18,48 +38,37 @@ export class Mesa {
         return this.limite;
     }
 
-    // Setter para limite
-    public setLimite(limite: number): void {
-        this.limite = limite;
-    }
-
-    // Getter para quantidadeOcupada
-    public getQuantidadeOcupada(): number {
-        return this.quantidadeOcupada;
-    }
-
-    // Setter para quantidadeOcupada
-    public setQuantidadeOcupada(quantidade: number): void {
-        this.quantidadeOcupada = quantidade;
-    }
-
-    // Getter para tempoMedioPermanencia
+    // Getter para tempo médio de permanência
     public getTempoMedioPermanencia(): number {
         return this.tempoMedioPermanencia;
     }
 
-    // Setter para tempoMedioPermanencia
-    public setTempoMedioPermanencia(tempo: number): void {
-        this.tempoMedioPermanencia = tempo;
+    // Verifica se um aluno está na mesa com base no ID
+    private alunoEstaNaMesa(id: string): boolean {
+        return this.alunos.some(aluno => aluno.getId() === id);
     }
 
-    // Getter para distribuicaoPermanencia
-    public getDistribuicaoPermanencia(): string {
-        return this.distribuicaoPermanencia;
-    }
-
-    // Setter para distribuicaoPermanencia
-    public setDistribuicaoPermanencia(distribuicao: string): void {
-        this.distribuicaoPermanencia = distribuicao;
-    }
-
-    // Adiciona um aluno à mesa se não ultrapassar o limite
+    // Adiciona um aluno à mesa se não ultrapassar o limite e se ele ainda não estiver na mesa
     public adicionarAlunoMesa(aluno: Aluno): boolean {
-        return
+        if (this.alunos.length >= this.limite) {
+            throw new Error("Você está tentando adicionar um aluno nas mesas, mas elas estão cheias.");
+        }
+
+        if (this.alunoEstaNaMesa(aluno.getId())) {
+            throw new Error("O aluno já está na mesa.");
+        }
+
+        this.alunos.push(aluno);
+        return true;
     }
 
-    // Remove um aluno da mesa
-    public removerAluno(): void {
-
+    // Remove um aluno da mesa pelo ID, verificando antes se ele está na mesa
+    public removerAluno(id: string): Aluno {
+        if (!this.alunoEstaNaMesa(id)) {
+         throw new Error("Você está tentando remover um aluno que não está na mesa");
+     }
+        const alunoRemovido = this.alunos.find(aluno => aluno.getId() === id);
+        this.alunos = this.alunos.filter(aluno => aluno.getId() !== id);
+        return alunoRemovido!;
     }
 }

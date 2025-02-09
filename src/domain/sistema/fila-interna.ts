@@ -1,10 +1,27 @@
 import { Aluno } from "./aluno"; 
 
 export class FilaInterna {
+
+    /**
+     * Alunos que estão na fila interna esperando para serem atendidos
+     */
     private alunos: Aluno[] = [];
+
+    /**
+     * LFI (Limite da Fila Interna).
+     */
     private limiteFilaInterna: number;
+
+    /**
+     * Tamanho atual da fila interna
+     */
     private tamanhoDaFila: number;
 
+    /**
+     * Construtor para a classe FilaInterna
+     * @param limiteFilaInterna - Número máximo de alunos que podem esperar para serem atendidos dentro do refeitório
+
+     */
     constructor(limiteFilaInterna: number) {
         this.limiteFilaInterna = limiteFilaInterna;
         this.tamanhoDaFila = 0;
@@ -43,7 +60,11 @@ export class FilaInterna {
 
     // Adiciona um aluno na fila interna se não ultrapassar o limite
     public adicionarAlunoFilaInterna(aluno: Aluno): boolean {
-       return
+        if (this.getTamanhoFila() >= this.getLimiteFilaInterna()) {
+         throw new Error("Você está tentando adicionar um aluno na fila interna, mas a fila está lotada");
+    }
+        this.alunos.push(aluno); // Adiciona o aluno à fila interna
+        return true;
     }
 
     // Remove o primeiro aluno da fila interna

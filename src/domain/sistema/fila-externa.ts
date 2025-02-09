@@ -1,12 +1,13 @@
 import { Aluno } from "./aluno"; // Importando a classe Aluno de aluno.ts
 
 export class FilaExterna {
+    
+    /**
+     * Alunos que estão na fila externa do refeitório 
+     */
     private alunos: Aluno[] = [];
-    private distribuicaoChegada: string;
 
-    constructor(distribuicaoChegada: string) {
-        this.distribuicaoChegada = distribuicaoChegada;
-    }
+    //A classe não precisa de constructor 
 
     // Getter para alunos
     public getAlunos(): Aluno[] {
@@ -20,7 +21,7 @@ export class FilaExterna {
 
     // Método para adicionar um aluno à fila externa
     public adicionarAlunoFilaExterna(aluno: Aluno): void {
-        this.alunos.push(aluno);
+        this.alunos.push(aluno);  
     }
 
     // Método para remover um aluno da fila externa
@@ -28,6 +29,6 @@ export class FilaExterna {
         if (this.alunos.length === 0) {
             throw new Error("Você está tentando remover um aluno de uma fila vazia"); 
         }
-        return this.alunos.shift()!; // Remove o primeiro aluno da fila
+        return this.alunos.shift()!; // O "!" no final significa que a verificação de que o aluno não é undefined já foi feita"
     }
 }

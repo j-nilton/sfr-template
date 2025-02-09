@@ -11,8 +11,6 @@ class Aluno {
 
 class FilaExterna {
     -alunos: Aluno[]  = []
-    -distribuicaoChegada: string
-    -verficarSeTemAlguem(aluno: Aluno): void
     +adicionarAlunoFilaExterna(aluno: Aluno): void
     +removerAluno(): Aluno
 }
@@ -20,13 +18,10 @@ class FilaExterna {
 class Catraca {
     -alunoAtual: Aluno | undefined
     -tempoDePermanencia: number
-    -limiteFilaInterna: number
     -quantidaDeAlunosParaLiberar: number
     -bloqueio: boolean
-    -estaOcupada: boolean
     +adicionarAlunoCatraca(aluno: Aluno): void
     +removerAlunoCatraca(): Aluno
-    +bloquearCatraca(): void 
 }
 
 class FilaInterna {
@@ -38,18 +33,18 @@ class FilaInterna {
 }
 
 class Atendimento {
+    -alunoAtual = Aluno | undefined
     -tempoMedioServico: number
-    -distribuicaoServico: string
     -estaLiberado: boolean
     +adicionarAlunoAtendimento(aluno: Aluno): void
-    +atenderAluno(aluno: Aluno): void
+    +terminarAtendimento(aluno: Aluno): void
 }
 
 class Mesa {
+    -alunos: Aluno[]
     -limite: number
-    -quantidadeOcupada: number
     -tempoMedioPermanencia: number
-    -distribuicaoPermanencia: string
+    -alunoEstaNaMesa(id: string): boolean
     +adicionarAlunoMesa(aluno: Aluno): boolean
     +removerAluno(): void
 }
@@ -60,8 +55,17 @@ class Refeitorio {
     -filaInterna: FilaInterna
     -atendimento: Atendimento
     -mesas: Mesa[]
-    -iniciarSimulacao(): void
-    -verificarDisponibilidade(): void
+    -chegadaAlunoFilaExterna(aluno: Aluno): boolean
+    -catracaEstaVazia(): boolean
+    -moverAlunoDaFilaExternaParaCatraca(aluno: Aluno): number
+    -filaInternaEstaCheia(): boolean
+    -moverAlunoDaCatracaParaFilaInterna(aluno: Aluno): number
+    -atendimentoEstaVazio(): boolean
+    -moverAlunoParaAtendimento(aluno: Aluno)
+    -temMesaDisponivel(): boolean
+    -finalizarAtendimento(aluno: Aluno)
+    
+
 }
 
 FilaExterna -- "1..*" Aluno : "contém"

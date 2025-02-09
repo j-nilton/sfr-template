@@ -1,15 +1,29 @@
 import { Aluno } from "./aluno"; // Importando a classe Aluno de aluno.ts
 
 export class Atendimento {
+
+    /**
+     *Tempo Médio para Servir Comida (TMPSC)
+     */
     private tempoMedioServico: number;
-    private distribuicaoServico: string;
+
+    /**
+     * Atributo que indica se o atendimento está disponível
+     */
     private estaLiberado: boolean;
+
+    /**
+     * Aluno que está sendo atendido 
+     */
     private alunoAtual: Aluno | undefined;
 
-    constructor(tempoMedioServico: number, distribuicaoServico: string) {
+    /**
+     * 
+     * @param tempoMedioServico - Tempo Médio para Servir Comida
+     */
+    constructor(tempoMedioServico: number) {
         this.tempoMedioServico = tempoMedioServico;
-        this.distribuicaoServico = distribuicaoServico;
-        this.estaLiberado = false; // Inicialmente, o atendimento não está liberado
+        this.estaLiberado = false; 
         this.alunoAtual = undefined;
     }
 
@@ -20,15 +34,6 @@ export class Atendimento {
 
     public setTempoMedioServico(tempoMedioServico: number): void {
         this.tempoMedioServico = tempoMedioServico;
-    }
-
-    // Getter e Setter para distribuicaoServico
-    public getDistribuicaoServico(): string {
-        return this.distribuicaoServico;
-    }
-
-    public setDistribuicaoServico(distribuicaoServico: string): void {
-        this.distribuicaoServico = distribuicaoServico;
     }
 
     // Getter e Setter para estaLiberado
@@ -58,12 +63,16 @@ export class Atendimento {
         this.alunoAtual = aluno; 
     }
 
-    // Finaliza o atendimento do aluno, removendo-o
-    public removerAluno(aluno: Aluno): void {
-        if(this.getAlunoAtual === undefined){
-            throw new Error("Você está tentando remover um aluno de um lugar vazio"); 
+    // Finaliza o atendimento do aluno, removendo-o dessa etapa
+    public terminarAtendimento(): Aluno {
+        const alunoRemovido = this.getAlunoAtual(); 
+
+        if (alunoRemovido === undefined) {
+            throw new Error("Você está tentando remover um aluno de um atendimento que não tem ninguém sendo atendido."); 
         }
         this.alunoAtual = undefined; 
         this.estaLiberado = false; 
-    }
+        return alunoRemovido; 
+}
+
 }

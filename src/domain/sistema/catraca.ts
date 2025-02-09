@@ -1,20 +1,35 @@
 import { Aluno } from "./aluno"; 
-import { FilaInterna } from "./fila-interna";
-
 export class Catraca {
-    private alunoAtual: Aluno | undefined;
-    private tempoDePermanencia: number;
-    private limiteFilaInterna: number;
-    private quantidadeDeAlunosParaLiberar: number;
-    private bloqueio: boolean;
-    private estaOcupada: boolean;
 
-    constructor(limiteFilaInterna: number, quantidadeDeAlunosParaLiberar: number, tempoDePermanencia: number) {
-        this.limiteFilaInterna = limiteFilaInterna;
+    /**
+     * Aluno que está usando a catraca no momento  
+     */
+    private alunoAtual: Aluno | undefined;
+
+    /**
+     * TTMDM (Tempo Médio para Digitar Matrícula).
+     */
+    private tempoDePermanencia: number;
+
+    /**
+     * Numero mínimo de alunos para a catraca ser liberada após ser bloqueada por excesso de alunos na fila interna
+     */
+    private quantidadeDeAlunosParaLiberar: number;
+
+    /**
+     * Significa se a catraca está liberada ou não 
+     */
+    private bloqueio: boolean;
+
+    /**
+     * Construtor para a classe Catraca
+     * @param quantidadeDeAlunosParaLiberar - Quantidade máxima de alunos que podem estar na fila interna para liberar a catraca depois de ter sido bloqueada
+     * @param tempoDePermanencia - TMDM (Tempo Médio para Digitar Matrícula).
+     */
+    constructor(quantidadeDeAlunosParaLiberar: number, tempoDePermanencia: number) {
         this.quantidadeDeAlunosParaLiberar = quantidadeDeAlunosParaLiberar;
         this.tempoDePermanencia = tempoDePermanencia;
         this.bloqueio = false;
-        this.estaOcupada = false;
         this.alunoAtual = undefined;
     }
 
@@ -36,15 +51,6 @@ export class Catraca {
         this.tempoDePermanencia = tempo;
     }
 
-    // Getter e Setter para limiteFilaInterna
-    public getLimiteFilaInterna(): number {
-        return this.limiteFilaInterna;
-    }
-
-    public setLimiteFilaInterna(limite: number): void {
-        this.limiteFilaInterna = limite;
-    }
-
     // Getter e Setter para quantidadeDeAlunosParaLiberar
     public getQuantidadeDeAlunosParaLiberar(): number {
         return this.quantidadeDeAlunosParaLiberar;
@@ -63,18 +69,9 @@ export class Catraca {
         this.bloqueio = bloqueio;
     }
 
-    // Getter e Setter para estaOcupada
-    public getEstaOcupada(): boolean {
-        return this.estaOcupada;
-    }
-
-    public setEstaOcupada(ocupada: boolean): void {
-        this.estaOcupada = ocupada;
-    }
-
     // Adiciona um aluno à catraca
     public adicionarAlunoCatraca(aluno: Aluno): void {
-        if(aluno !== undefined){
+        if(this.getAlunoAtual !== undefined){
             throw new Error("Você está tentando adicionar um aluno em uma catraca ocupada!"); 
         }
         this.alunoAtual = aluno; 
@@ -87,7 +84,6 @@ export class Catraca {
        }
         let alunoRemovido = this.alunoAtual; 
         this.alunoAtual = undefined;
-        this.estaOcupada = false;
         return alunoRemovido;
     }                                                                                 
 }
