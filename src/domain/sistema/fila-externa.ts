@@ -7,8 +7,6 @@ export class FilaExterna {
      */
     private alunos: Aluno[] = [];
 
-    //A classe não precisa de constructor 
-
     // Getter para alunos
     public getAlunos(): Aluno[] {
         return this.alunos;
@@ -31,4 +29,5 @@ export class FilaExterna {
         }
         return this.alunos.shift()!; // O "!" no final significa que a verificação de que o aluno não é undefined já foi feita"
     }
+
 }

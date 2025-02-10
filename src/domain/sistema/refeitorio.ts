@@ -5,7 +5,6 @@ import { FilaExterna } from "./fila-externa";
 import { FilaInterna } from "./fila-interna";
 import { Mesa } from "./mesa";
 
-
 export class Refeitorio {
 
     /**
@@ -51,62 +50,107 @@ export class Refeitorio {
         this.mesas = mesas; 
     }
 
-    //Simula a chegada de um aluno na fila externa do refeitório 
-    private chegadaAlunoFilaExterna(aluno: Aluno): boolean{
+    // Getters e Setters
+
+    // Getter e Setter para filaExterna
+    public getFilaExterna(): FilaExterna {
+        return this.filaExterna;
+    }
+
+    public setFilaExterna(filaExterna: FilaExterna): void {
+        this.filaExterna = filaExterna;
+    }
+
+    // Getter e Setter para catraca
+    public getCatraca(): Catraca {
+        return this.catraca;
+    }
+
+    public setCatraca(catraca: Catraca): void {
+        this.catraca = catraca;
+    }
+
+    // Getter e Setter para filaInterna
+    public getFilaInterna(): FilaInterna {
+        return this.filaInterna;
+    }
+
+    public setFilaInterna(filaInterna: FilaInterna): void {
+        this.filaInterna = filaInterna;
+    }
+
+    // Getter e Setter para atendimento
+    public getAtendimento(): Atendimento {
+        return this.atendimento;
+    }
+
+    public setAtendimento(atendimento: Atendimento): void {
+        this.atendimento = atendimento;
+    }
+
+    // Getter e Setter para mesas
+    public getMesas(): Mesa {
+        return this.mesas;
+    }
+
+    public setMesas(mesas: Mesa): void {
+        this.mesas = mesas;
+    }
+
+    // Método para simular a chegada de um aluno na fila externa
+    public chegadaAlunoFilaExterna(aluno: Aluno): boolean{
         this.filaExterna.adicionarAlunoFilaExterna(aluno); 
         return true; 
     }
 
-    //Simula a passagem de um aluno da fila externa para a catraca 
-    private moverAlunoDaFilaExternaParaCatraca(aluno: Aluno): number{
+    // Simulação de movimentação entre filas
+    public moverAlunoDaFilaExternaParaCatraca(aluno: Aluno): number {
         let alunoRemovidoFilaExterna = this.filaExterna.removerAluno();
         this.catraca.adicionarAlunoCatraca(alunoRemovidoFilaExterna); 
         return aluno.getTempoFilaExterna(); 
     }
 
-    //Simula a passagem de um aluno da catraca para a fila interna
-    private moverAlunoDaCatracaParaFilaInterna(aluno: Aluno): number{
+    public moverAlunoDaCatracaParaFilaInterna(aluno: Aluno): number {
         let alunoRemovidoCatraca = this.catraca.removerAlunoCatraca(); 
         this.filaInterna.adicionarAlunoFilaInterna(alunoRemovidoCatraca); 
         return aluno.getTempoNaCatraca(); 
     }
 
-    //Simula a passagem de um aluno da fila interna para o refetório
-    private moverAlunoParaAtendimento(aluno: Aluno): number{
+    public moverAlunoParaAtendimento(aluno: Aluno): number {
         let alunoRemovidoFilaInterna = this.filaInterna.removerAluno(); 
         this.atendimento.adicionarAlunoAtendimento(alunoRemovidoFilaInterna); 
         return aluno.getTempoFilaInterna(); 
     } 
 
-    //Simula a passagem de um aluno do atendimento para as mesas
-    private moverAlunoParaMesa(aluno: Aluno): number{
+    public moverAlunoParaMesa(aluno: Aluno): number {
         let alunoRemovidoAtendimento = this.atendimento.terminarAtendimento(); 
         this.mesas.adicionarAlunoMesa(alunoRemovidoAtendimento); 
         return aluno.getTempoDeAtendimento(); 
     }
 
-    //Simula a finalização do atendimento de um aluno 
-    private finalizarAtendimento(aluno: Aluno): Aluno{
+    // Método para finalizar o atendimento de um aluno 
+    public finalizarAtendimento(aluno: Aluno): Aluno{
         return this.mesas.removerAluno(aluno.getId()); 
     }
 
-    //Verifica se a catraca está vazia
-    private catracaEstaVazia(): boolean{
+    // Métodos para verificar estados das filas e atendimento
+    public catracaEstaVazia(): boolean{
         return this.catraca.getAlunoAtual() === undefined; 
     }
 
-    //Verifica se a fila interna está cheia
-    private filaInternaEstaCheia(): boolean{
+    public filaInternaEstaCheia(): boolean{
         return this.filaInterna.getAlunos().length >= this.filaInterna.getLimiteFilaInterna(); 
     }
 
-    //Verifica se o atendimento esta vazio
-    private atendimentoEstaVazio(): boolean{
+    public atendimentoEstaVazio(): boolean{
         return this.atendimento.getAlunoAtual() === undefined; 
     }
 
-    //Verifica se todas as mesas não estão lotadas
-    private temMesaDisponivel(): boolean{
+    public temMesaDisponivel(): boolean{
         return this.mesas.getAlunos().length < this.mesas.getLimite(); 
+    }
+
+    public filaExternaEstaVazia(): boolean{
+        return this.filaExterna.getAlunos().length === 0; 
     }
 }
