@@ -63,12 +63,13 @@ export class Mesa {
     }
 
     // Remove um aluno da mesa pelo ID, verificando antes se ele está na mesa
-    public removerAluno(id: string): Aluno {
+    public removerAluno(aluno: Aluno): Aluno {
+        const  id = aluno.getId();
         if (!this.alunoEstaNaMesa(id)) {
          throw new Error("Você está tentando remover um aluno que não está na mesa");
      }
-        const alunoRemovido = this.alunos.find(aluno => aluno.getId() === id);
-        this.alunos = this.alunos.filter(aluno => aluno.getId() !== id);
+        const alunoRemovido = this.alunos.find(alunoArray => alunoArray == aluno);
+        this.alunos = this.alunos.filter(alunoArray => alunoArray != aluno);
         return alunoRemovido!;
     }
 }
