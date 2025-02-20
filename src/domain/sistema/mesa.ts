@@ -43,9 +43,9 @@ export class Mesa {
         return this.tempoMedioPermanencia;
     }
 
-    // Verifica se um aluno está na mesa com base no ID
-    private alunoEstaNaMesa(id: string): boolean {
-        return this.alunos.some(aluno => aluno.getId() === id);
+    // Verifica se um aluno está na mesa comparando referências de objetos
+    private alunoEstaNaMesa(aluno: Aluno): boolean {
+        return this.alunos.includes(aluno);
     }
 
     // Adiciona um aluno à mesa se não ultrapassar o limite e se ele ainda não estiver na mesa
@@ -54,7 +54,7 @@ export class Mesa {
             throw new Error("Você está tentando adicionar um aluno nas mesas, mas elas estão cheias.");
         }
 
-        if (this.alunoEstaNaMesa(aluno.getId())) {
+        if (this.alunoEstaNaMesa(aluno)) {
             throw new Error("O aluno já está na mesa.");
         }
 
@@ -62,14 +62,14 @@ export class Mesa {
         return true;
     }
 
-    // Remove um aluno da mesa pelo ID, verificando antes se ele está na mesa
+    // Remove um aluno da mesa verificando antes se ele está na mesa
     public removerAluno(aluno: Aluno): Aluno {
-        const  id = aluno.getId();
-        if (!this.alunoEstaNaMesa(id)) {
-         throw new Error("Você está tentando remover um aluno que não está na mesa");
-     }
-        const alunoRemovido = this.alunos.find(alunoArray => alunoArray == aluno);
-        this.alunos = this.alunos.filter(alunoArray => alunoArray != aluno);
+        if (!this.alunoEstaNaMesa(aluno)) {
+            throw new Error("Você está tentando remover um aluno que não está na mesa");
+        }
+
+        const alunoRemovido = this.alunos.find(alunoArray => alunoArray === aluno);
+        this.alunos = this.alunos.filter(alunoArray => alunoArray !== aluno);
         return alunoRemovido!;
     }
 }

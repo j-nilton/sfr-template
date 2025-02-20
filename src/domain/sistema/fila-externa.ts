@@ -7,6 +7,10 @@ export class FilaExterna {
      */
     private alunos: Aluno[] = [];
 
+    constructor(alunos: Aluno[]){
+        this.alunos = []; 
+    }
+
     // Getter para alunos
     public getAlunos(): Aluno[] {
         return this.alunos;

@@ -1,75 +1,61 @@
-export class Aluno{
+export class Aluno {
+    private timeStampChegadaFilaExterna: number | undefined;
+    private timeStampPassagemFilaExternaCatraca: number | undefined;
+    private timeStampPassagemCatracaFilaInterna: number;
+    private timeStampPassagemFilaInternaAtendimento: number;
+    private timeStampPassagemAtendimentoMesa: number;
+    private timeStampSaiDoRefeitorio: number;
 
-    /**
-     * Identificador único de um aluno 
-     */
-    private id: string; 
-
-    /**
-     * Instante de chegada do aluno na fila externa
-     */
-    private instanteDeChegada: number; 
-
-    /**
-     * Tempo que o aluno esperou na fila externa 
-     */
-    private tempoFilaExterna: number; 
-
-    /**
-     * Tempo que o aluno esperou na catraca 
-     */
-    private tempoNaCatraca: number; 
-
-    /**
-     * Tempo que o aluno esperou na fila interna
-     */
-    private tempoFilaInterna: number; 
-
-    /**
-     * Tempo que o aluno levou para ser atendido
-     */
-    private tempoDeAtendimento: number; 
-
-    /**
-     * TMPNM (Tempo Médio de Permanência na Mesa).
-     */
-    private tempoPermanenciaMesa: number; 
-
-    /**
-     * Construtor para a classe Aluno 
-     * @param id - Identificador único de um aluno 
-     */
-    constructor(id: string){
-        this.id = id;
+    constructor(timeStampSaiDoRefeitorio: number) {
+        this.timeStampSaiDoRefeitorio = timeStampSaiDoRefeitorio;
     }
 
-    public getId(): string{
-        return this.id; 
+    // Getters e Setters
+    public getTimeStampChegadaFilaExterna(): number | undefined {
+        return this.timeStampChegadaFilaExterna;
     }
 
-    public getInstanteDeChegada() : number{
-        return this.instanteDeChegada; 
-    }
- 
-    public getTempoFilaExterna() : number {
-        return this.tempoFilaExterna
-    }
-    
-    public getTempoFilaInterna() : number {
-        return this.tempoFilaInterna; 
+    public setTimeStampChegadaFilaExterna(value: number | undefined): void {
+        this.timeStampChegadaFilaExterna = value;
     }
 
-    public getTempoNaCatraca() : number {
-        return this.tempoNaCatraca; 
-    }
-    
-    public getTempoDeAtendimento() : number{
-        return this.tempoDeAtendimento; 
+    public getTimeStampPassagemFilaExternaCatraca(): number | undefined {
+        return this.timeStampPassagemFilaExternaCatraca;
     }
 
-    public getTempoPermanenciaMesa() : number {
-        return this.tempoPermanenciaMesa; 
+    public setTimeStampPassagemFilaExternaCatraca(value: number | undefined): void {
+        this.timeStampPassagemFilaExternaCatraca = value;
     }
-    
-    
+
+    public getTimeStampPassagemCatracaFilaInterna(): number {
+        return this.timeStampPassagemCatracaFilaInterna;
+    }
+
+    public setTimeStampPassagemCatracaFilaInterna(value: number): void {
+        this.timeStampPassagemCatracaFilaInterna = value;
+    }
+
+    public getTimeStampPassagemFilaInternaAtendimento(): number {
+        return this.timeStampPassagemFilaInternaAtendimento;
+    }
+
+    public setTimeStampPassagemFilaInternaAtendimento(value: number): void {
+        this.timeStampPassagemFilaInternaAtendimento = value;
+    }
+
+    public getTimeStampPassagemAtendimentoMesa(): number {
+        return this.timeStampPassagemAtendimentoMesa;
+    }
+
+    public setTimeStampPassagemAtendimentoMesa(value: number): void {
+        this.timeStampPassagemAtendimentoMesa = value;
+    }
+
+    public getTimeStampSaiDoRefeitorio(): number {
+        return this.timeStampSaiDoRefeitorio;
+    }
+
+    public setTimeStampSaiDoRefeitorio(value: number): void {
+        this.timeStampSaiDoRefeitorio = value;
+    }
 }

@@ -37,17 +37,13 @@ export class Refeitorio {
      * Construtor da classe Refeitorio
      */
     constructor(
-        filaExterna: FilaExterna,
-        catraca: Catraca,
-        filaInterna: FilaInterna,
-        atendimento: Atendimento,
-        mesas: Mesa
+        tamanhoFilaExterna: number, 
+        alunoNaCatraca?: number, 
+        tamanhoFilaInterna: number, 
+        alunoNoAtendimento?: number,
+        alunosNaMesa: Aluno[]
     ){
-        this.filaExterna = filaExterna; 
-        this.catraca = catraca; 
-        this.filaInterna = filaInterna; 
-        this.atendimento = atendimento; 
-        this.mesas = mesas; 
+        this.filaExterna = new FilaExterna()
     }
 
     // Getters e Setters
@@ -107,30 +103,30 @@ export class Refeitorio {
     public moverAlunoDaFilaExternaParaCatraca(aluno: Aluno): number {
         let alunoRemovidoFilaExterna = this.filaExterna.removerAluno();
         this.catraca.adicionarAlunoCatraca(alunoRemovidoFilaExterna); 
-        return aluno.getTempoFilaExterna(); 
+        return aluno.getTimeStampPassagemFilaExternaCatraca(); 
     }
 
     public moverAlunoDaCatracaParaFilaInterna(aluno: Aluno): number {
         let alunoRemovidoCatraca = this.catraca.removerAlunoCatraca(); 
         this.filaInterna.adicionarAlunoFilaInterna(alunoRemovidoCatraca); 
-        return aluno.getTempoNaCatraca(); 
+        return aluno.getTimeStampPassagemCatracaFilaInterna(); 
     }
 
     public moverAlunoParaAtendimento(aluno: Aluno): number {
         let alunoRemovidoFilaInterna = this.filaInterna.removerAluno(); 
         this.atendimento.adicionarAlunoAtendimento(alunoRemovidoFilaInterna); 
-        return aluno.getTempoFilaInterna(); 
+        return aluno.getTimeStampPassagemFilaInternaAtendimento(); 
     } 
 
     public moverAlunoParaMesa(aluno: Aluno): number {
         let alunoRemovidoAtendimento = this.atendimento.terminarAtendimento(); 
         this.mesas.adicionarAlunoMesa(alunoRemovidoAtendimento); 
-        return aluno.getTempoDeAtendimento(); 
+        return aluno.getTimeStampPassagemAtendimentoMesa(); 
     }
 
     // Método para finalizar o atendimento de um aluno 
     public finalizarAtendimento(aluno: Aluno): Aluno{
-        return this.mesas.removerAluno(aluno.getId()); 
+        return this.mesas.removerAluno(aluno); 
     }
 
     // Métodos para verificar estados das filas e atendimento
