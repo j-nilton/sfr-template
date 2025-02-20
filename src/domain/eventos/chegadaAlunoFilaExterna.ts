@@ -3,11 +3,10 @@ import { MaquinaDeEventos } from "./maquinaDeEventos";
 import { Refeitorio } from "../sistema/refeitorio";
 import { FilaExterna } from "../sistema/fila-externa";
 import { Aluno } from "../sistema/aluno";
-import { passarAlunoParaCatraca } from "./passarAlunoParaCatraca";
+import { PassarAlunoParaCatraca } from "./passarAlunoParaCatraca";
 
 
-
-export class chegadaAlunoFilaExterna extends Evento {
+export class ChegadaAlunoFilaExterna extends Evento {
   private aluno: Aluno; 
 
   constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos, aluno: Aluno ){
@@ -17,16 +16,19 @@ export class chegadaAlunoFilaExterna extends Evento {
   }
   
   public processarEvento(): void {
+
+    // log
     console.log(`Aluno chegou à fila externa no instante ${this.getTimeStamp()}`);
 
+    // alterar o estado do sistema
     const filaEstaVazia = this.refeitorio.filaExternaEstaVazia(); 
     const sucesso = this.refeitorio.chegadaAlunoFilaExterna(this.aluno); 
 
+    // agenda novos eventos
     if(sucesso && filaEstaVazia){
-      let alunoVaiParaCatraca = new passarAlunoParaCatraca(this.timeStamp, this.refeitorio, this.maquinaEventos);   
+      const alunoVaiParaCatraca = new PassarAlunoParaCatraca(this.timeStamp, this.refeitorio, this.maquinaEventos, this.aluno);   
       this.maquinaEventos.adicionarEvento(alunoVaiParaCatraca); 
     }
-
 
   }
 }

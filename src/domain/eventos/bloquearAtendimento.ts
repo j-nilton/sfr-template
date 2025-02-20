@@ -1,7 +1,7 @@
 import { Evento } from "./evento";
 
-export class bloquearAtendimento extends Evento{
+export class BloquearAtendimento extends Evento{
     processarEvento (): void{
-        console.log(`[${this.getTimeStamp()}]Atendimento bloqueado.`)
+        console.log(`[${this.getTimeStamp()}]Atendimento bloqueado.`);
     }
 }
