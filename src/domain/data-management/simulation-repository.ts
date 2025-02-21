@@ -5,18 +5,22 @@ import { SimulationParameters } from "./Entities/simulation-parameters";
 export class SimulationRepositoryMock implements SimulationRepositoryI {
   private STORAGE_KEY = "simulations";
 
-  async save(simulation: Simulation): Promise<void> {
+  async save(nova: Simulation): Promise<void> {
     let simulations = this.getAllSync();
+    if(nova.id == undefined){
+      nova.id = "id"+ Math.random();  
+    }
 
     // Verifica se a simulação já existe (atualiza) ou adiciona uma nova
-    const index = simulations.findIndex((sim) => sim.id === simulation.id);
+    const index = simulations.findIndex((sim) => sim.id === nova.id);
     if (index !== -1) {
-      simulations[index] = simulation;
+      simulations[index] = nova;
     } else {
-      simulations.push(simulation);
+      simulations.push(nova);
     }
 
     this.saveToLocalStorage(simulations);
+    console.log(nova); 
   }
 
   async getById(id: string): Promise<Simulation | null> {

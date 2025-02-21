@@ -1,4 +1,4 @@
-import { Aluno } from "./aluno"; 
+import { Aluno } from "./aluno";
 
 export class FilaInterna {
 
@@ -61,17 +61,17 @@ export class FilaInterna {
     // Adiciona um aluno na fila interna se não ultrapassar o limite
     public adicionarAlunoFilaInterna(aluno: Aluno): boolean {
         if (this.getTamanhoFila() >= this.getLimiteFilaInterna()) {
-         throw new Error("Você está tentando adicionar um aluno na fila interna, mas a fila está lotada");
-    }
+            throw new Error("Você está tentando adicionar um aluno na fila interna, mas a fila está lotada");
+        }
         this.alunos.push(aluno); // Adiciona o aluno à fila interna
         return true;
     }
 
     // Remove o primeiro aluno da fila interna
     public removerAluno(): Aluno {
-        if(this.alunos.length == 0){
-            throw new Error("Você está tentando remover um aluno de uma fila vazia"); 
+        if (this.alunos.length == 0) {
+            throw new Error("Você está tentando remover um aluno de uma fila vazia");
         }
-        return this.alunos.shift(); 
+        return this.alunos.shift();
     }
 }
