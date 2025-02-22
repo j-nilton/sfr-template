@@ -7,20 +7,22 @@ export class SimulationRepositoryMock implements SimulationRepositoryI {
 
   async save(nova: Simulation): Promise<void> {
     let simulations = this.getAllSync();
-    if(nova.id == undefined){
-      nova.id = "id"+ Math.random();  
+
+    // Garante que a simulação tem um ID único
+    if (!nova.id) {
+      nova.id = crypto.randomUUID(); // Gera um UUID válido
     }
 
-    // Verifica se a simulação já existe (atualiza) ou adiciona uma nova
-    const index = simulations.findIndex((sim) => sim.id === nova.id);
-    if (index !== -1) {
-      simulations[index] = nova;
+    // Evita que a simulação fique aninhada dentro de outra
+    const existingIndex = simulations.findIndex((sim) => sim.id === nova.id);
+    if (existingIndex !== -1) {
+      simulations[existingIndex] = { ...nova };
     } else {
-      simulations.push(nova);
+      simulations.push({ ...nova }); // Adiciona a nova simulação corretamente
     }
 
     this.saveToLocalStorage(simulations);
-    console.log(nova); 
+    console.log("Simulação salva:", nova);
   }
 
   async getById(id: string): Promise<Simulation | null> {
@@ -49,16 +51,23 @@ export class SimulationRepositoryMock implements SimulationRepositoryI {
   }
 
   private restoreSimulation(obj: any): Simulation {
-    return new Simulation(obj.id, obj.name, new SimulationParameters(
-      obj.parameters.internalQueueLimit,
-      obj.parameters.tableLimit,
-      obj.parameters.registrationTime,
-      obj.parameters.servingTime,
-      obj.parameters.tableTime,
-      obj.parameters.turnstileLimit,
-      obj.parameters.studentCount,
-      obj.parameters.serviceInterval,
-      obj.parameters.arrivalDistribution
-    ));
+    console.log("Restaurando simulação:", obj); // Debugging
+  
+    return new Simulation(
+      obj.id,
+      obj.name,
+      new SimulationParameters(
+        obj.parameters.internalQueueLimit,
+        obj.parameters.tableLimit,
+        obj.parameters.registrationTime,
+        obj.parameters.servingTime,
+        obj.parameters.tableTime,
+        obj.parameters.turnstileLimit,
+        obj.parameters.studentCount,
+        obj.parameters.serviceInterval,
+        obj.parameters.arrivalDistribution // Deve ser "normal", "exp" ou "uniform"
+      )
+    );
   }
+  
 }
