@@ -36,14 +36,13 @@ export class Refeitorio {
      * Construtor da classe Refeitorio
      */
     constructor(
-        tamanhoFilaExterna: number,
         limiteFilaInterna: number,
         tempoMedioAtendimento: number,
         limiteMesa: number, 
         quantidadeAlunosLiberarCatraca: number, 
         tempoMedioDigitarMatricula: number
     ){ 
-        this.filaExterna = new FilaExterna(tamanhoFilaExterna); 
+        this.filaExterna = new FilaExterna(); 
         this.catraca = new Catraca(quantidadeAlunosLiberarCatraca, tempoMedioDigitarMatricula); 
         this.filaInterna = new FilaInterna(limiteFilaInterna);  
         this.atendimento = new Atendimento(tempoMedioAtendimento); 
@@ -107,7 +106,7 @@ export class Refeitorio {
     public moverAlunoDaFilaExternaParaCatraca(): number {
         const aluno = this.filaExterna.removerAluno();
         this.catraca.adicionarAlunoCatraca(aluno);
-        return aluno.getTempoNaCatraca();
+        return this.catraca.getTempoMedioDigitarMatricula();
     }
 
     //Método para mover um aluno da catraca para a fila interna

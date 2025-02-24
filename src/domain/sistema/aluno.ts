@@ -1,7 +1,6 @@
 export class Aluno {
     private horaChegada: number;
     private tempoNaMesa: number; 
-    private tempoNaCatraca: number; 
     private horaSaida: number;
 
     constructor(horaSaida: number) {
@@ -24,16 +23,8 @@ export class Aluno {
         this.tempoNaMesa = tempoNaMesa; 
     }
 
-    public getTempoNaCatraca(): number{
-        return this.tempoNaCatraca;
-    }
-
-    public setTempoNaCatraca(tempoNaCatraca: number){
-        this.tempoNaCatraca = tempoNaCatraca; 
-    }
-
     public getHoraSaida(): number{
-        return this.tempoNaCatraca;
+        return this.horaSaida;
     }
 
     public setHoraSaida(horaSaida: number){
