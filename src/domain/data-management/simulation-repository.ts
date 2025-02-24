@@ -65,7 +65,7 @@ export class SimulationRepositoryMock implements SimulationRepositoryI {
         obj.parameters.turnstileLimit,
         obj.parameters.studentCount,
         obj.parameters.serviceInterval,
-        obj.parameters.arrivalDistribution // Deve ser "normal", "exp" ou "uniform"
+        obj.parameters.arrivalDistribution 
       )
     );
   }

@@ -6,9 +6,11 @@ export class FilaExterna {
      * Alunos que estão na fila externa do refeitório 
      */
     private alunos: Aluno[] = [];
+    private tamanhoFilaExterna: number; 
 
-    constructor(alunos: Aluno[]){
+    constructor(tamanhoFilaExterna: number){
         this.alunos = []; 
+        this.tamanhoFilaExterna = tamanhoFilaExterna; 
     }
 
     // Getter para alunos
@@ -19,6 +21,10 @@ export class FilaExterna {
     // Setter para alunos
     public setAlunos(alunos: Aluno[]): void {
         this.alunos = alunos;
+    }
+
+    public getTamanhoFilaExterna(): number{
+        return this.tamanhoFilaExterna;
     }
 
     // Método para adicionar um aluno à fila externa

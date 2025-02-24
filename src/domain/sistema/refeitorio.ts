@@ -32,18 +32,22 @@ export class Refeitorio {
      */
     private mesas: Mesa;
 
-
     /**
      * Construtor da classe Refeitorio
      */
     constructor(
-        tamanhoFilaExterna: number, 
-        alunoNaCatraca?: number, 
-        tamanhoFilaInterna: number, 
-        alunoNoAtendimento?: number,
-        alunosNaMesa: Aluno[]
-    ){
-        this.filaExterna = new FilaExterna()
+        tamanhoFilaExterna: number,
+        limiteFilaInterna: number,
+        tempoMedioAtendimento: number,
+        limiteMesa: number, 
+        quantidadeAlunosLiberarCatraca: number, 
+        tempoMedioDigitarMatricula: number
+    ){ 
+        this.filaExterna = new FilaExterna(tamanhoFilaExterna); 
+        this.catraca = new Catraca(quantidadeAlunosLiberarCatraca, tempoMedioDigitarMatricula); 
+        this.filaInterna = new FilaInterna(limiteFilaInterna);  
+        this.atendimento = new Atendimento(tempoMedioAtendimento); 
+        this.mesas = new Mesa(limiteMesa); 
     }
 
     // Getters e Setters
@@ -99,51 +103,54 @@ export class Refeitorio {
         return true; 
     }
 
-    // Simulação de movimentação entre filas
-    public moverAlunoDaFilaExternaParaCatraca(aluno: Aluno): number {
-        let alunoRemovidoFilaExterna = this.filaExterna.removerAluno();
-        this.catraca.adicionarAlunoCatraca(alunoRemovidoFilaExterna); 
-        return aluno.getTimeStampPassagemFilaExternaCatraca(); 
+    // Mover aluno da fila externa para a catraca
+    public moverAlunoDaFilaExternaParaCatraca(): number {
+        const aluno = this.filaExterna.removerAluno();
+        this.catraca.adicionarAlunoCatraca(aluno);
+        return aluno.getTempoNaCatraca();
     }
 
-    public moverAlunoDaCatracaParaFilaInterna(aluno: Aluno): number {
-        let alunoRemovidoCatraca = this.catraca.removerAlunoCatraca(); 
-        this.filaInterna.adicionarAlunoFilaInterna(alunoRemovidoCatraca); 
-        return aluno.getTimeStampPassagemCatracaFilaInterna(); 
+    //Método para mover um aluno da catraca para a fila interna
+    public moverAlunoDaCatracaParaFilaInterna(): Aluno {
+        const aluno = this.catraca.removerAlunoCatraca(); 
+        this.filaInterna.adicionarAlunoFilaInterna(aluno); 
+        return aluno; 
     }
 
-    public moverAlunoParaAtendimento(aluno: Aluno): number {
-        let alunoRemovidoFilaInterna = this.filaInterna.removerAluno(); 
-        this.atendimento.adicionarAlunoAtendimento(alunoRemovidoFilaInterna); 
-        return aluno.getTimeStampPassagemFilaInternaAtendimento(); 
+    //Método para mover um aluno da fila interna para o atendimento 
+    public moverAlunoParaAtendimento(): Aluno {
+        const aluno = this.filaInterna.removerAlunoFilaInterna(); 
+        this.atendimento.adicionarAlunoAtendimento(aluno); 
+        return aluno; 
     } 
 
-    public moverAlunoParaMesa(aluno: Aluno): number {
-        let alunoRemovidoAtendimento = this.atendimento.terminarAtendimento(); 
-        this.mesas.adicionarAlunoMesa(alunoRemovidoAtendimento); 
-        return aluno.getTimeStampPassagemAtendimentoMesa(); 
+    //Método para mover um aluno do atendimento para as mesas
+    public moverAlunoParaMesa(): number {
+         const aluno = this.atendimento.terminarAtendimento(); 
+         this.mesas.adicionarAlunoMesa(aluno); 
+         return this.atendimento.getTempoMedioAtendimento(); 
     }
 
-    // Método para finalizar o atendimento de um aluno 
-    public finalizarAtendimento(aluno: Aluno): Aluno{
-        return this.mesas.removerAluno(aluno); 
+    // Método para retirar um aluno do refeitório 
+    public retirarAlunoMesa(aluno: Aluno): Aluno{
+        return this.mesas.removerAlunoMesa(aluno); 
     }
 
     // Métodos para verificar estados das filas e atendimento
     public catracaEstaVazia(): boolean{
-        return this.catraca.getAlunoAtual() === undefined; 
+        return !this.catraca.getAlunoAtual();
     }
 
     public filaInternaEstaCheia(): boolean{
-        return this.filaInterna.getAlunos().length >= this.filaInterna.getLimiteFilaInterna(); 
+        return this.filaInterna.getAlunos().length == this.filaInterna.getLimiteFilaInterna(); 
     }
 
     public atendimentoEstaVazio(): boolean{
-        return this.atendimento.getAlunoAtual() === undefined; 
+        return !this.atendimento.getAlunoAtual();
     }
 
     public temMesaDisponivel(): boolean{
-        return this.mesas.getAlunos().length < this.mesas.getLimite(); 
+        return this.mesas.getAlunos().length < this.mesas.getLimiteMesa(); 
     }
 
     public filaExternaEstaVazia(): boolean{

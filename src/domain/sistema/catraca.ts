@@ -9,7 +9,7 @@ export class Catraca {
     /**
      * TTMDM (Tempo Médio para Digitar Matrícula).
      */
-    private tempoDePermanencia: number;
+    private tempoMedioDigitarMatricula: number;
 
     /**
      * Numero mínimo de alunos para a catraca ser liberada após ser bloqueada por excesso de alunos na fila interna
@@ -19,17 +19,17 @@ export class Catraca {
     /**
      * Significa se a catraca está liberada ou não 
      */
-    private bloqueio: boolean;
+    private bloqueada: boolean;
 
     /**
      * Construtor para a classe Catraca
      * @param quantidadeDeAlunosParaLiberar - Quantidade máxima de alunos que podem estar na fila interna para liberar a catraca depois de ter sido bloqueada
-     * @param tempoDePermanencia - TMDM (Tempo Médio para Digitar Matrícula).
+     * @param tempoMedioDigitarMatricula - TMDM (Tempo Médio para Digitar Matrícula).
      */
-    constructor(quantidadeDeAlunosParaLiberar: number, tempoDePermanencia: number) {
+    constructor(quantidadeDeAlunosParaLiberar: number, tempoMedioDigitarMatricula: number) {
         this.quantidadeDeAlunosParaLiberar = quantidadeDeAlunosParaLiberar;
-        this.tempoDePermanencia = tempoDePermanencia;
-        this.bloqueio = false;
+        this.tempoMedioDigitarMatricula = tempoMedioDigitarMatricula;
+        this.bloqueada = false;
         this.alunoAtual = undefined;
     }
 
@@ -42,13 +42,13 @@ export class Catraca {
         this.alunoAtual = aluno;
     }
 
-    // Getter e Setter para tempoDePermanencia
-    public getTempoDePermanencia(): number {
-        return this.tempoDePermanencia;
+    // Getter e Setter para tempoMedioDigitarMatricula
+    public getTempoMedioDigitarMatricula(): number {
+        return this.tempoMedioDigitarMatricula;
     }
 
-    public setTempoDePermanencia(tempo: number): void {
-        this.tempoDePermanencia = tempo;
+    public setTempoMedioDigitarMatricula(tempo: number): void {
+        this.tempoMedioDigitarMatricula = tempo;
     }
 
     // Getter e Setter para quantidadeDeAlunosParaLiberar
@@ -61,17 +61,17 @@ export class Catraca {
     }
 
     // Getter e Setter para bloqueio
-    public getBloqueio(): boolean {
-        return this.bloqueio;
+    public getBloqueada(): boolean {
+        return this.bloqueada;
     }
 
-    public setBloqueio(bloqueio: boolean): void {
-        this.bloqueio = bloqueio;
+    public setBloqueada(bloqueada : boolean): void {
+        this.bloqueada = bloqueada;
     }
 
     // Adiciona um aluno à catraca
     public adicionarAlunoCatraca(aluno: Aluno): void {
-        if(this.getAlunoAtual !== undefined){
+        if(this.alunoAtual !== undefined){
             throw new Error("Você está tentando adicionar um aluno em uma catraca ocupada!"); 
         }
         this.alunoAtual = aluno; 
@@ -85,5 +85,9 @@ export class Catraca {
         let alunoRemovido = this.alunoAtual; 
         this.alunoAtual = undefined;
         return alunoRemovido;
-    }                                                                                 
+    }                   
+    
+    public estaBloqueada(): boolean{
+        return this.bloqueada; 
+    }
 }

@@ -7,25 +7,18 @@ export class Mesa {
     private alunos: Aluno[] = []; 
 
     /**
-     * LM (Limite de Mesas).
+     * LM (limiteMesa de Mesas).
      */
-    private limite: number;
-
-    /**
-     * Média de tempo que os alunos permanecem na mesa comendo
-     */
-    private tempoMedioPermanencia: number;
+    private limiteMesa: number;
 
     /**
      * 
      * @param alunos - Alunos que estão ocupando as mesas
-     * @param limite - LM (Limite de Mesas).
-     * @param tempoMedioPermanencia - Média de tempo que os alunos permanecem na mesa comendo
+     * @param limiteMesa - LM (limiteMesa de Mesas).
      */
-    constructor(alunos: Aluno[], limite: number, tempoMedioPermanencia: number) {
-        this.alunos = alunos;
-        this.limite = limite;
-        this.tempoMedioPermanencia = tempoMedioPermanencia;
+    constructor(limiteMesa: number) {
+        this.alunos = [];
+        this.limiteMesa = limiteMesa;
     }
 
     // Getter para alunos
@@ -33,14 +26,9 @@ export class Mesa {
         return this.alunos;
     }
 
-    // Getter para limite
-    public getLimite(): number {
-        return this.limite;
-    }
-
-    // Getter para tempo médio de permanência
-    public getTempoMedioPermanencia(): number {
-        return this.tempoMedioPermanencia;
+    // Getter para limiteMesa
+    public getLimiteMesa(): number {
+        return this.limiteMesa;
     }
 
     // Verifica se um aluno está na mesa comparando referências de objetos
@@ -48,9 +36,9 @@ export class Mesa {
         return this.alunos.includes(aluno);
     }
 
-    // Adiciona um aluno à mesa se não ultrapassar o limite e se ele ainda não estiver na mesa
+    // Adiciona um aluno à mesa se não ultrapassar o limiteMesa e se ele ainda não estiver na mesa
     public adicionarAlunoMesa(aluno: Aluno): boolean {
-        if (this.alunos.length >= this.limite) {
+        if (this.alunos.length >= this.limiteMesa) {
             throw new Error("Você está tentando adicionar um aluno nas mesas, mas elas estão cheias.");
         }
 
@@ -63,7 +51,7 @@ export class Mesa {
     }
 
     // Remove um aluno da mesa verificando antes se ele está na mesa
-    public removerAluno(aluno: Aluno): Aluno {
+    public removerAlunoMesa(aluno: Aluno): Aluno {
         if (!this.alunoEstaNaMesa(aluno)) {
             throw new Error("Você está tentando remover um aluno que não está na mesa");
         }

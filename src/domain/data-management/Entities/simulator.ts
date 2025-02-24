@@ -14,7 +14,7 @@ export class simulator{
         this.maquina = new MaquinaDeEventos(); 
     }
 
-    private configurarChegadasAlunos(){
+    private configurarChegadaAlunos(){
         
     }
 }

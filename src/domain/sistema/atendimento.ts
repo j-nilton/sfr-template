@@ -5,12 +5,7 @@ export class Atendimento {
     /**
      *Tempo Médio para Servir Comida (TMPSC)
      */
-    private tempoMedioServico: number;
-
-    /**
-     * Atributo que indica se o atendimento está disponível
-     */
-    private estaLiberado: boolean;
+    private tempoMedioAntendimento: number;
 
     /**
      * Aluno que está sendo atendido 
@@ -19,30 +14,20 @@ export class Atendimento {
 
     /**
      * 
-     * @param tempoMedioServico - Tempo Médio para Servir Comida
+     * @param tempoMedioAntendimento - Tempo Médio para Servir Comida
      */
-    constructor(tempoMedioServico: number) {
-        this.tempoMedioServico = tempoMedioServico;
-        this.estaLiberado = false; 
+    constructor(tempoMedioAntendimento: number) {
+        this.tempoMedioAntendimento = tempoMedioAntendimento;
         this.alunoAtual = undefined;
     }
 
-    // Getter e Setter para tempoMedioServico
-    public getTempoMedioServico(): number {
-        return this.tempoMedioServico;
+    // Getter e Setter para tempoMedioAntendimento
+    public getTempoMedioAtendimento(): number {
+        return this.tempoMedioAntendimento;
     }
 
-    public setTempoMedioServico(tempoMedioServico: number): void {
-        this.tempoMedioServico = tempoMedioServico;
-    }
-
-    // Getter e Setter para estaLiberado
-    public getEstaLiberado(): boolean {
-        return this.estaLiberado;
-    }
-
-    public setEstaLiberado(estaLiberado: boolean): void {
-        this.estaLiberado = estaLiberado;
+    public setTempoMedioAtendimento(tempoMedioAntendimento: number): void {
+        this.tempoMedioAntendimento = tempoMedioAntendimento;
     }
 
     // Getter e Setter para alunoAtual
@@ -56,23 +41,26 @@ export class Atendimento {
 
     // Adiciona um aluno ao atendimento
     public adicionarAlunoAtendimento(aluno: Aluno): void {
-            if(aluno !== undefined){
-                throw new Error("Você está tentando adicionar um aluno em um atendimento ocupado"); 
-            }
-        
-        this.alunoAtual = aluno; 
+        if (aluno !== undefined) {
+            throw new Error("Você está tentando adicionar um aluno em um atendimento ocupado");
+        }
+
+        this.alunoAtual = aluno;
     }
 
     // Finaliza o atendimento do aluno, removendo-o dessa etapa
     public terminarAtendimento(): Aluno {
-        const alunoRemovido = this.getAlunoAtual(); 
+        const alunoRemovido = this.alunoAtual;
 
         if (alunoRemovido === undefined) {
-            throw new Error("Você está tentando remover um aluno de um atendimento que não tem ninguém sendo atendido."); 
+            throw new Error("Você está tentando remover um aluno de um atendimento que não tem ninguém sendo atendido.");
         }
-        this.alunoAtual = undefined; 
-        this.estaLiberado = false; 
-        return alunoRemovido; 
-}
+        this.alunoAtual = undefined;
+        return alunoRemovido;
+    }
+ 
+    public estaLiberado(): boolean{
+        return !this.alunoAtual; 
+    }
 
 }
