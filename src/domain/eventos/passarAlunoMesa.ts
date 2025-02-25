@@ -14,7 +14,7 @@ export class PassarAlunoMesa extends Evento {
   }
   processarEvento(): void {
     //log
-    console.log(`Evento - Momento de Chegada - ChegadaAlunoNaMesa - Aluno ${this.aluno.getId()} - Tempo ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - aluno chega na mesa- Tempo ${this.getTimeStamp()} segundos`);
 
     // alterar o estado do sistema
     this.refeitorio.retirarAlunoMesa(this.aluno);

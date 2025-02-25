@@ -16,7 +16,7 @@ export class FinalizarAtendimentoAluno extends Evento {
 
   processarEvento(): void {
     // log
-    console.log(`Evento - Transição Almoço - TransicaoAlunoDeMesaParaForaDoRefeitorio - Aluno ${this.aluno.getId()} - Tempo: ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - aluno sai do refeitório - Tempo: ${this.getTimeStamp()} segundos`);
 
     // agenda novos eventos
     const sorteador: RandomGeneratorI = new GaussianRandom();

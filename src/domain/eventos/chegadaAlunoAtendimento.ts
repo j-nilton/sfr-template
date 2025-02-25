@@ -16,7 +16,7 @@ export class ChegadaAlunoAtendimento extends Evento {
 
   processarEvento(): void {
     // log
-    console.log(`Evento - Transição Atendimento - TransicaoAlunoFilaInternaParaMesa - Aluno ${this.aluno.getId()} - Tempo ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - aluno vai para atendimento - Tempo ${this.getTimeStamp()} segundos`);
 
     //alterar estado do sistema
     const atendimentoEstaVazio = !this.refeitorio.atendimentoEstaVazio();

@@ -14,6 +14,6 @@ export class SairDoRefeitorio extends Evento {
 
   processarEvento(): void {
     // log
-    console.log(`Evento - Momento de Saida - AlunoSaiuDoRefeitorio - Aluno ${this.aluno.getId()} - Tempo: ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - aluno sai do refeitório - Tempo: ${this.getTimeStamp()} segundos`);
   }
 }

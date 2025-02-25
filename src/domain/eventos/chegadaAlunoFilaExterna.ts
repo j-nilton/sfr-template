@@ -18,7 +18,7 @@ export class ChegadaAlunoFilaExterna extends Evento {
   public processarEvento(): void {
 
     // log
-    console.log(`Evento - Momento de Chegada -  ChegadaAlunoFilaExterna - Aluno ${this.aluno.getId()} - Tempo ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - aluno chega na fila externa - Aluno - Tempo ${this.getTimeStamp()} segundos`);
 
     // alterar o estado do sistema
     const filaEstaVazia = this.refeitorio.filaExternaEstaVazia();

@@ -10,15 +10,13 @@ export class SimulationRepositoryMock implements SimulationRepositoryI {
 
     // Garante que a simulação tem um ID único
     if (!nova.id) {
-      nova.id = crypto.randomUUID(); // Gera um UUID válido
+      nova.id = crypto.randomUUID(); 
     }
-
-    // Evita que a simulação fique aninhada dentro de outra
     const existingIndex = simulations.findIndex((sim) => sim.id === nova.id);
     if (existingIndex !== -1) {
       simulations[existingIndex] = { ...nova };
     } else {
-      simulations.push({ ...nova }); // Adiciona a nova simulação corretamente
+      simulations.push({ ...nova }); 
     }
 
     this.saveToLocalStorage(simulations);
@@ -51,7 +49,7 @@ export class SimulationRepositoryMock implements SimulationRepositoryI {
   }
 
   private restoreSimulation(obj: any): Simulation {
-    console.log("Restaurando simulação:", obj); // Debugging
+    console.log("Restaurando simulação:", obj); 
   
     return new Simulation(
       obj.id,

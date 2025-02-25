@@ -17,7 +17,7 @@ export class PassarAlunoParaCatraca extends Evento {
 
   processarEvento(): void {
     // Log do evento
-    console.log(`Evento - Transição Catraca - TransicaoAlunoFilaExternaParaFilaInterna - Aluno ${this.aluno.getId()} - Tempo ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - aluno vai para catraca - Tempo ${this.getTimeStamp()} segundos`);
 
     // Verificação de estado do sistema
     const filaInternaCheia: boolean = this.refeitorio.filaInternaEstaCheia();

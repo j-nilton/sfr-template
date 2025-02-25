@@ -17,7 +17,7 @@ export class PassarAlunoFilaInterna extends Evento {
 
   processarEvento(): void {
     // Log do evento
-    console.log(`Evento - Momento de Chegada - ChegadaAlunoNaFilaInterna - Aluno ${this.aluno.getId()} - Tempo ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - aluno chega na fila interna - Tempo ${this.getTimeStamp()} segundos`);
 
     // Verificação de estado do sistema
     const mesasDisponiveis: boolean = this.refeitorio.temMesaDisponivel();
