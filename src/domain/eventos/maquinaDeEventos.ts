@@ -7,7 +7,7 @@ export class MaquinaDeEventos {
     public processarEventos(): Evento | void {
         while (this.eventos.length > 0) {
             this.eventos = this.eventos.sort((a, b) => a.getTimeStamp() - b.getTimeStamp());
-            const e: Evento = this.eventos.shift();
+            const e: Evento = this.eventos.shift()!;
             e.processarEvento();
         }
     }

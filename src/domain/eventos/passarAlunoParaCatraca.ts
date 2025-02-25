@@ -1,3 +1,4 @@
+import { GaussianRandom, RandomGeneratorI } from "../simulation-engine/util/random-generators";
 import { Aluno } from "../sistema/aluno";
 import { Refeitorio } from "../sistema/refeitorio";
 import { BloquearCatraca } from "./BloquearCatraca";
@@ -16,30 +17,37 @@ export class PassarAlunoParaCatraca extends Evento {
 
   processarEvento(): void {
     // Log do evento
-    console.log(`Aluno passou para a catraca no instante ${this.getTimeStamp()}`);
+    console.log(`Evento - Transição Catraca - TransicaoAlunoFilaExternaParaFilaInterna - Aluno ${this.aluno.getId()} - Tempo ${this.getTimeStamp()} segundos`);
 
     // Verificação de estado do sistema
     const filaInternaCheia: boolean = this.refeitorio.filaInternaEstaCheia();
-    const tempoNaCatraca: number = this.refeitorio.moverAlunoDaCatracaParaFilaInterna(this.aluno);
-    const bloqueado: boolean = this.refeitorio.getCatraca().getBloqueio();
+    const bloqueado: boolean = this.refeitorio.getCatraca().getBloqueada();
 
     // Agendamento de eventos
     if (!filaInternaCheia) {
-      const instanteLiberado: number = this.timeStamp + tempoNaCatraca;
-      
+
+      this.refeitorio.moverAlunoDaCatracaParaFilaInterna();
+
       if (bloqueado) {
-        const desbloquearAtendimento = new DesbloquearCatraca(instanteLiberado, this.refeitorio, this.maquinaEventos);
+        console.log(`Evento - DesbloquearCatraca - ${this.getTimeStamp()}`);
+        const desbloquearAtendimento = new DesbloquearCatraca(this.timeStamp, this.refeitorio, this.maquinaEventos);
         this.maquinaEventos.adicionarEvento(desbloquearAtendimento);
       }
-      
-      const alunoVaiParaFilaInterna = new PassarAlunoFilaInterna(instanteLiberado, this.refeitorio, this.maquinaEventos, this.aluno);
+
+      const sorteador: RandomGeneratorI = new GaussianRandom();
+
+      // Adicionando o tempo gasto pelo o aluno para digitar a matricula no eevento
+      const instanteDaPassagem: number = this.timeStamp + (sorteador.next() * 2 * this.refeitorio.getCatraca().getTempoMedioDigitarMatricula());
+
+      const alunoVaiParaFilaInterna = new PassarAlunoFilaInterna(instanteDaPassagem, this.refeitorio, this.maquinaEventos, this.aluno);
       this.maquinaEventos.adicionarEvento(alunoVaiParaFilaInterna);
+
     } else {
       // Se a fila interna está cheia, bloquear a catraca somente se ainda não estiver bloqueada
       if (!bloqueado) {
-        this.refeitorio.getCatraca().setBloqueio(true);
-        const instanteFinalizado: number = this.timeStamp + tempoNaCatraca;
-        const bloquearAtendimento = new BloquearCatraca(instanteFinalizado, this.refeitorio, this.maquinaEventos);
+        console.log(`Evento - BloquearCatraca - ${this.getTimeStamp()}`);
+        this.refeitorio.getCatraca().setBloqueada(true);
+        const bloquearAtendimento = new BloquearCatraca(this.timeStamp, this.refeitorio, this.maquinaEventos);
         this.maquinaEventos.adicionarEvento(bloquearAtendimento);
       }
     }
