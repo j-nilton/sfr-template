@@ -2,32 +2,35 @@ import { GaussianRandom, RandomGeneratorI } from "../simulation-engine/util/rand
 import { Aluno } from "../sistema/aluno";
 import { Refeitorio } from "../sistema/refeitorio";
 import { Evento } from "./evento";
-import { FinalizarAtendimentoAluno } from "./finalizarAtendimentoAluno";
+import { TransicaoAlunoDeMesaParaForaDoRefeitorio } from "./finalizarAtendimentoAluno";
 import { MaquinaDeEventos } from "./maquinaDeEventos";
+import { TransicaoAlunoFilaInternaParaMesa } from "./chegadaAlunoAtendimento";
+import { DesbloquearCatraca } from "./desbloquearCatraca";
 
-export class PassarAlunoMesa extends Evento {
+export class ChegadaAlunoNaMesa extends Evento{
   private aluno: Aluno;
 
   constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos, aluno: Aluno) {
     super(timeStamp, refeitorio, maquinaEventos);
     this.aluno = aluno;
   }
-  processarEvento(): void {
-    //log
-    console.log(`Evento - aluno chega na mesa- Tempo ${this.getTimeStamp()} segundos`);
+    processarEvento(): void {
+      // Log
+      console.log(`Evento - Momento de Chegada - ChegadaAlunoNaMesa - Aluno - Tempo ${this.getTimeStamp()} segundos`);
 
-    // alterar o estado do sistema
-    this.refeitorio.retirarAlunoMesa(this.aluno);
+      // Alterar o estado do sistema
+      this.refeitorio.moverAlunoParaMesa();
 
-    // agenda novos eventos
+      if(this.refeitorio.getAtendimento().estaLiberado()) {
+        const novaTransicaoAlunoFilaExternaParaInterna = new TransicaoAlunoFilaInternaParaMesa(this.timeStamp, this.refeitorio, this.maquinaEventos, this.refeitorio.getFilaInterna().getAlunos()[0]);
+        this.maquinaEventos.adicionarEvento(novaTransicaoAlunoFilaExternaParaInterna);
+     }
+  
+      // Agenda novos eventos
+      const finalizarAtendimento = new TransicaoAlunoDeMesaParaForaDoRefeitorio(this.timeStamp, this.refeitorio, this.maquinaEventos, this.aluno);
+      this.maquinaEventos.adicionarEvento(finalizarAtendimento);
 
-    // const sorteador: RandomGeneratorI = new GaussianRandom();
-
-    // // Adicionando o tempo gasto no atendiemnto
-    // const instanteDaPassagem: number = this.timeStamp + (sorteador.next() * 2 * this.refeitorio.getMesas().getTempoNaMesa());
-
-    const finalizarAtendimento = new FinalizarAtendimentoAluno(this.timeStamp, this.refeitorio, this.maquinaEventos, this.aluno);
-    this.maquinaEventos.adicionarEvento(finalizarAtendimento);
+      
   }
 }
 

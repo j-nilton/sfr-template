@@ -3,35 +3,32 @@ import { MaquinaDeEventos } from "./maquinaDeEventos";
 import { Refeitorio } from "../sistema/refeitorio";
 import { FilaExterna } from "../sistema/fila-externa";
 import { Aluno } from "../sistema/aluno";
-import { PassarAlunoParaCatraca } from "./passarAlunoParaCatraca";
+import { TransicaoAlunoFilaExternaParaFilaInterna } from "./passarAlunoParaCatraca";
 
 
 export class ChegadaAlunoFilaExterna extends Evento {
-  private aluno: Aluno;
+  private aluno: Aluno; 
 
-  constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos, aluno: Aluno) {
-    super(timeStamp, refeitorio, maquinaEventos)
+  constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos, aluno: Aluno ){
+      super(timeStamp, refeitorio, maquinaEventos)
 
-    this.aluno = aluno;
+      this.aluno = aluno; 
   }
-
+  
   public processarEvento(): void {
 
     // log
-    console.log(`Evento - aluno chega na fila externa - Aluno - Tempo ${this.getTimeStamp()} segundos`);
+    console.log(`Evento - Momento de Chegada - ChegadaAlunoFilaExterna - Aluno - Tempo ${this.getTimeStamp()} segundos`);
 
     // alterar o estado do sistema
-    const filaEstaVazia = this.refeitorio.filaExternaEstaVazia();
-    // console.log(`Fila externa Vazia? ${filaEstaVazia}`);
-    const sucesso = this.refeitorio.chegadaAlunoFilaExterna(this.aluno);
-    // console.log(`Adicionei aluno na fila? ${filaEstaVazia}`);
+    const filaEstaVazia = this.refeitorio.filaExternaEstaVazia(); 
+    const sucesso = this.refeitorio.chegadaAlunoFilaExterna(this.aluno); 
+    const catracaDisponivel = this.refeitorio.catracaEstaVazia();
 
     // agenda novos eventos
-    if (sucesso && filaEstaVazia) {
-      this.refeitorio.moverAlunoDaFilaExternaParaCatraca();
-      const alunoVaiParaCatraca = new PassarAlunoParaCatraca(this.timeStamp, this.refeitorio, this.maquinaEventos, this.aluno);
-      this.maquinaEventos.adicionarEvento(alunoVaiParaCatraca);
+    if(sucesso && filaEstaVazia && catracaDisponivel){
+      const alunoVaiParaCatraca = new TransicaoAlunoFilaExternaParaFilaInterna(this.timeStamp, this.refeitorio, this.maquinaEventos, this.aluno);   
+      this.maquinaEventos.adicionarEvento(alunoVaiParaCatraca);   
     }
-
   }
 }

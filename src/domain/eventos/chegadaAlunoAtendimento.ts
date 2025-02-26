@@ -1,36 +1,38 @@
 import { Aluno } from "../sistema/aluno";
-import { Evento } from "./evento";
+import { Evento }  from "./evento";
 import { MaquinaDeEventos } from "./maquinaDeEventos";
-import { PassarAlunoMesa } from "./passarAlunoMesa";
+import { ChegadaAlunoNaMesa } from "./passarAlunoMesa";
 import { Refeitorio } from "../sistema/refeitorio";
 import { GaussianRandom, RandomGeneratorI } from "../simulation-engine/util/random-generators";
 
-export class ChegadaAlunoAtendimento extends Evento {
-  private aluno: Aluno;
+export class TransicaoAlunoFilaInternaParaMesa extends Evento{
+  private aluno : Aluno;
 
-  constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos, aluno: Aluno) {
-    super(timeStamp, refeitorio, maquinaEventos);
+  constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos,aluno : Aluno){
+    super(timeStamp,refeitorio,maquinaEventos);
 
     this.aluno = aluno;
   }
-
+  
   processarEvento(): void {
     // log
-    console.log(`Evento - aluno vai para atendimento - Tempo ${this.getTimeStamp()} segundos`);
-
+    console.log(`Evento - Transição Atendimento - TransicaoAlunoFilaInternaParaMesa - Aluno - Tempo ${this.getTimeStamp()} segundos`);
+      
     //alterar estado do sistema
-    const atendimentoEstaVazio = !this.refeitorio.atendimentoEstaVazio();
-
+    this.refeitorio.moverAlunoParaAtendimento();
+    const atendimentoEstaVazio = this.refeitorio.atendimentoEstaVazio();
+    const tempoAtendimento = this.refeitorio.getAtendimento().getTempoMedioAtendimento();
+    
     //agendar novos eventos
-    if (atendimentoEstaVazio) {
-      this.refeitorio.moverAlunoParaMesa();
+    if(atendimentoEstaVazio){
 
       const sorteador: RandomGeneratorI = new GaussianRandom();
 
-      // Adicionando o tempo gasto no atendiemnto
-      const instanteDaPassagem: number = this.timeStamp + (sorteador.next() * 2 * this.refeitorio.getAtendimento().getTempoMedioAtendimento());
-
-      const seguirParaMesa = new PassarAlunoMesa(instanteDaPassagem, this.refeitorio, this.maquinaEventos, this.aluno);
+      // Adicionando o tempo gasto no atendimento
+      const instanteDaPassagem: number = this.timeStamp + (sorteador.next() * 2 * tempoAtendimento);
+      
+      // console.log(`ALUNO NA MESA ${this.aluno.getId()} ${instanteDaPassagem - this.timeStamp}`);
+      const seguirParaMesa = new ChegadaAlunoNaMesa(instanteDaPassagem,this.refeitorio,this.maquinaEventos, this.aluno);
       this.maquinaEventos.adicionarEvento(seguirParaMesa);
     }
   }

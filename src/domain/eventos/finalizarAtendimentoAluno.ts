@@ -5,22 +5,23 @@ import { Evento } from "./evento";
 import { MaquinaDeEventos } from "./maquinaDeEventos";
 import { SairDoRefeitorio } from "./sairDoRefeitorio";
 
-export class FinalizarAtendimentoAluno extends Evento {
-  private aluno: Aluno;
+export class TransicaoAlunoDeMesaParaForaDoRefeitorio extends Evento {
+  private aluno : Aluno;
 
-  constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos, aluno: Aluno) {
-    super(timeStamp, refeitorio, maquinaEventos);
+  constructor(timeStamp: number, refeitorio: Refeitorio, maquinaEventos: MaquinaDeEventos,aluno : Aluno){
+    super(timeStamp,refeitorio,maquinaEventos);
 
     this.aluno = aluno;
   }
 
   processarEvento(): void {
-    // log
-    console.log(`Evento - aluno sai do refeitório - Tempo: ${this.getTimeStamp()} segundos`);
+    // Log
+    console.log(`Evento - Transição Almoço - TransicaoAlunoDeMesaParaForaDoRefeitorio - Aluno  - Tempo: ${this.getTimeStamp()} segundos`);
 
-    // agenda novos eventos
+    // Agenda novos eventos
+    this.refeitorio.retirarAlunoMesa(this.aluno);
     const sorteador: RandomGeneratorI = new GaussianRandom();
-
+      
     // Adicionando o tempo gasto no atendiemnto
     const instanteDaPassagem: number = this.timeStamp + (sorteador.next() * 2 * this.refeitorio.getMesas().getTempoNaMesa());
 

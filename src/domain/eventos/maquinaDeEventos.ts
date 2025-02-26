@@ -4,6 +4,10 @@ export class MaquinaDeEventos {
     private eventos: Evento[] = [];
     private instanteDeSimulacao = 0;
 
+    public getEventos(): Evento[]{
+        return this.eventos;
+    } 
+
     public processarEventos(): Evento | void {
         while (this.eventos.length > 0) {
             this.eventos = this.eventos.sort((a, b) => a.getTimeStamp() - b.getTimeStamp());
