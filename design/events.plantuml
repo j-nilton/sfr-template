@@ -1,62 +1,85 @@
 @startuml Gerenciador de Eventos do Sistema
 
 class MaquinaDeEventos {
-    - _eventos: Evento[] 
-    - _instanteDeSimulacao: number = 0
-    + processarEventos(): Evento
-    + adicionarEvento(novoEvento: Evento): void
-    - atualizarInstanteDeSimulacao(novoInstanteDeSimulacao: number): void
+  - eventos: Evento[]
+  - instanteDeSimulacao: number
+  + processarEventos(): Evento | void
+  + adicionarEvento(NovoEvento: Evento): void
+  - atualizarInstanteDeSimulacao(novoInstanteDeSimulacao: number): void
 }
 
 class Evento {
-    # _timeStamp: number
-    # _refeitorio: Refeitorio 
-    # _maquinaEventos: MaquinaDeEventos
-    + getTimeStamp(): number
-    + processarEvento(): void 
+  - timeStamp: number
+  - refeitorio: Refeitorio
+  - maquinaEventos: MaquinaDeEventos
+  + getTimeStamp(): number
+  + processarEvento(): void
 }
 
-class ChegadaAlunoFilaExterna extends Evento {
-    + processarEvento(): void
+class ChegadaAlunoFilaExterna {
+  - aluno: Aluno
+  + processarEvento(): void
 }
 
-class PassarAlunoParaCatraca extends Evento {
-    + processarEvento(): void
+class BloquearCatraca {
+  + processarEvento(): void
 }
 
-class PassarAlunoParaFilaInterna extends Evento {
-    + processarEvento(): void
+class PassarAlunoParaCatraca {
+  - aluno: Aluno
+  + processarEvento(): void
 }
 
-class ChegadaAlunoAtendimento extends Evento {
-    + processarEvento(): void
+class BloquearAtendimento {
+  + processarEvento(): void
 }
 
-class FinalizarAtendimentoAluno extends Evento {
-    + processarEvento(): void
+class DesbloquearAtendimento {
+  + processarEvento(): void
 }
 
-class PassarAlunoMesa extends Evento {
-    + processarEvento(): void
+class ChegadaAlunoAtendimento {
+  - aluno: Aluno
+  + processarEvento(): void
 }
 
-class BloquearCatraca extends Evento {
-    + processarEvento(): void
+class FinalizarAtendimentoAluno {
+  - aluno: Aluno
+  + processarEvento(): void
 }
 
-class DesbloquearCatraca extends Evento {
-    + processarEvento(): void
+class DesbloquearCatraca {
+  + processarEvento(): void
 }
 
-class BloquearAtendimento extends Evento {
-    + processarEvento(): void
+class PassarAlunoParaFilaInterna {
+  - aluno: Aluno
+  + processarEvento(): void
 }
 
-class DesbloquearAtendimento extends Evento {
-    + processarEvento(): void
+class PassarAlunoMesa {
+  - aluno: Aluno
+  + processarEvento(): void
 }
 
-MaquinaDeEventos -- "1..*" Evento
-Evento -- "1..1" MaquinaDeEventos
+class SairDoRefeitorio {
+  - aluno: Aluno
+  + processarEvento(): void
+}
+
+Evento <|-- BloquearAtendimento
+Evento <|-- BloquearCatraca
+Evento <|-- ChegadaAlunoAtendimento
+Evento <|-- ChegadaAlunoFilaExterna
+Evento <|-- DesbloquearAtendimento
+Evento <|-- DesbloquearCatraca
+Evento <|-- FinalizarAtendimentoAluno
+Evento <|-- PassarAlunoMesa
+Evento <|-- PassarAlunoParaCatraca
+Evento <|-- PassarAlunoParaFilaInterna
+Evento <|-- SairDoRefeitorio
+
+MaquinaDeEventos "1" o-- "n" Evento
+Evento "1" *-- "1" MaquinaDeEventos
 
 @enduml

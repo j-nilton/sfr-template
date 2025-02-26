@@ -1,6 +1,6 @@
 # Simulador de Fluxo de Refeitório (SFR)
 
-Este projeto foi desenvolvido como requisito para a aprovação na disciplina de **Programação Orientada a Objetos e Engenharia de Software** do curso de **Tecnólogo em Análise e Desenvolvimento de Sistemas** do **IFPI/Campus Piripiri**. Ele consiste na modelagem de um simulador de fluxo de refeitório utilizando **TypeScript**, com base em um projeto elaborado pelo professor Dr. [Iallen Gábio](https://github.com/iallengabio). O [Documento de Especificação de Requisitos / Documento de Design da Aplicação](https://docs.google.com/document/d/1mUOEwobqiFFIAUdnUSOnNeMWUZRFbhJcW_c7mQbH5Z4/edit?usp=sharing) detalham todos os requisitos necessários para a construção da aplicação.
+Este projeto foi desenvolvido como requisito para a aprovação na disciplina de **Programação Orientada a Objetos e Engenharia de Software** do curso de **Tecnólogo em Análise e Desenvolvimento de Sistemas** do **IFPI/Campus Piripiri**. Ele consiste na modelagem de um simulador de fluxo de refeitório utilizando **TypeScript**, com base em um projeto elaborado pelo Professor Dr. [Iallen Gábio](https://github.com/iallengabio). O [Documento de Especificação de Requisitos / Documento de Design da Aplicação](https://docs.google.com/document/d/1mUOEwobqiFFIAUdnUSOnNeMWUZRFbhJcW_c7mQbH5Z4/edit?usp=sharing) detalham todos os requisitos necessários para a construção da aplicação.
 
 ## Estrutura das Pastas
 
@@ -43,7 +43,7 @@ A estrutura das pastas com os arquivos criados/alterados pela equipe está organ
  ┃ ┣ 📜fila-interna.ts
  ┃ ┣ 📜mesa.ts
  ┃ ┗ 📜refeitorio.ts
- 
+
  ...
 ```
 
@@ -53,6 +53,20 @@ A lógica para a implementação do funcionamento do refeitório está represent
 
 <p align="center">
   <img src="./public/Fluxograma_Refeitório.png" alt="Fluxograma">
+</p>
+
+## Diagramas - Funcionamento do Refeitório
+
+# Diagramas de Sistemas
+
+<p align="center">
+  <img src="./public/Diagrama_Sistema.png" alt="Diagramas de Sistemas">
+</p>
+
+# Diagrama de Eventos
+
+<p align="center">
+  <img src="./public/Diagrama_Eventos.png" alt="Diagrama de Eventos">
 </p>
 
 ## Como Configurar e Executar o Projeto

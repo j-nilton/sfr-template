@@ -1,81 +1,117 @@
 @startuml Sistema 
 class Aluno {
-    -id: string
-    -instanteDeChegada: number | undefined
-    -tempoFilaExterna: number
-    -tempoNaCatraca: number
-    -tempoFilaInterna: number
-    -tempoDeAtendimento: number
-    -tempoPermanenciaMesa: number
+    - horaChegada: number
+    - tempoNaMesa: number
+    - horaSaida: number
+    
+    + getHoraChegada(): number
+    + setHoraChegada(horaChegada: number): void
+    + getTempoNaMesa(): number
+    + setTempoNaMesa(tempoNaMesa: number): void
+    + getHoraSaida(): number
+    + setHoraSaida(horaSaida: number): void
+    + calcularEspera(): number
 }
 
 class FilaExterna {
-    -alunos: Aluno[]  = []
-    +adicionarAlunoFilaExterna(aluno: Aluno): void
-    +removerAluno(): Aluno
+    - alunos: Aluno[]
+    + getAlunos(): Aluno[]
+    + setAlunos(alunos: Aluno[]): void
+    + adicionarAlunoFilaExterna(aluno: Aluno): void
+    + removerAluno(): Aluno
 }
 
 class Catraca {
-    -alunoAtual: Aluno | undefined
-    -tempoDePermanencia: number
-    -quantidaDeAlunosParaLiberar: number
-    -bloqueio: boolean
-    +adicionarAlunoCatraca(aluno: Aluno): void
-    +removerAlunoCatraca(): Aluno
+    - alunoAtual: Aluno | undefined
+    - tempoMedioDigitarMatricula: number
+    - quantidadeDeAlunosParaLiberar: number
+    - bloqueada: boolean
+    + getAlunoAtual(): Aluno | undefined
+    + setAlunoAtual(aluno: Aluno | undefined): void
+    + getTempoMedioDigitarMatricula(): number
+    + setTempoMedioDigitarMatricula(tempo: number): void
+    + getQuantidadeDeAlunosParaLiberar(): number
+    + setQuantidadeDeAlunosParaLiberar(quantidade: number): void
+    + getBloqueada(): boolean
+    + setBloqueada(bloqueada: boolean): void
+    + adicionarAlunoCatraca(aluno: Aluno): void
+    + removerAlunoCatraca(): Aluno | undefined
+    + estaBloqueada(): boolean
 }
 
 class FilaInterna {
-    -alunos: Aluno[] = []
-    -limiteFilaInterna: number
-    -tamanhoDaFila: number
-    +adicionarAlunoFilaInterna(aluno: Aluno): boolean
-    +removerAluno(): Aluno
+    - alunos: Aluno[]
+    - limiteFilaInterna: number
+    + getAlunos(): Aluno[]
+    + setAlunos(alunos: Aluno[]): void
+    + getLimiteFilaInterna(): number
+    + setLimiteFilaInterna(limite: number): void
+    + adicionarAlunoFilaInterna(aluno: Aluno): boolean
+    + removerAlunoFilaInterna(): Aluno
+    + estaLotada(): boolean
+    + tamanhoFilaInterna(): number
 }
 
 class Atendimento {
-    -alunoAtual = Aluno | undefined
-    -tempoMedioServico: number
-    -estaLiberado: boolean
-    +adicionarAlunoAtendimento(aluno: Aluno): void
-    +terminarAtendimento(aluno: Aluno): void
+    - tempoMedioAtendimento: number
+    - alunoAtual: Aluno | undefined
+    + getTempoMedioAtendimento(): number
+    + setTempoMedioAtendimento(tempoMedioAtendimento: number): void
+    + getAlunoAtual(): Aluno | undefined
+    + setAlunoAtual(aluno: Aluno | undefined): void
+    + adicionarAlunoAtendimento(aluno: Aluno): void
+    + terminarAtendimento(): Aluno
+    + estaLiberado(): boolean
 }
 
 class Mesa {
-    -alunos: Aluno[]
-    -limite: number
-    -tempoMedioPermanencia: number
-    -alunoEstaNaMesa(id: string): boolean
-    +adicionarAlunoMesa(aluno: Aluno): boolean
-    +removerAluno(): void
+    - alunos: Aluno[]
+    - limiteMesa: number
+    + getAlunos(): Aluno[]
+    + getLimiteMesa(): number
+    - alunoEstaNaMesa(aluno: Aluno): boolean
+    + adicionarAlunoMesa(aluno: Aluno): boolean
+    + removerAlunoMesa(aluno: Aluno): Aluno
 }
 
 class Refeitorio {
-    -filaExterna: FilaExterna
-    -catraca: Catraca
-    -filaInterna: FilaInterna
-    -atendimento: Atendimento
-    -mesas: Mesa[]
-    -chegadaAlunoFilaExterna(aluno: Aluno): boolean
-    -catracaEstaVazia(): boolean
-    -moverAlunoDaFilaExternaParaCatraca(aluno: Aluno): number
-    -filaInternaEstaCheia(): boolean
-    -moverAlunoDaCatracaParaFilaInterna(aluno: Aluno): number
-    -atendimentoEstaVazio(): boolean
-    -moverAlunoParaAtendimento(aluno: Aluno)
-    -temMesaDisponivel(): boolean
-    -finalizarAtendimento(aluno: Aluno)
-    
-
+    - filaExterna: FilaExterna
+    - catraca: Catraca
+    - filaInterna: FilaInterna
+    - atendimento: Atendimento
+    - mesas: Mesa
+    + getFilaExterna(): FilaExterna
+    + setFilaExterna(filaExterna: FilaExterna): void
+    + getCatraca(): Catraca
+    + setCatraca(catraca: Catraca): void
+    + getFilaInterna(): FilaInterna
+    + setFilaInterna(filaInterna: FilaInterna): void
+    + getAtendimento(): Atendimento
+    + setAtendimento(atendimento: Atendimento): void
+    + getMesas(): Mesa
+    + setMesas(mesas: Mesa): void
+    + chegadaAlunoFilaExterna(aluno: Aluno): boolean
+    + moverAlunoDaFilaExternaParaCatraca(): number
+    + moverAlunoDaCatracaParaFilaInterna(): Aluno
+    + moverAlunoParaAtendimento(): Aluno
+    + moverAlunoParaMesa(): number
+    + retirarAlunoMesa(aluno: Aluno): Aluno
+    + catracaEstaVazia(): boolean
+    + filaInternaEstaCheia(): boolean
+    + atendimentoEstaVazio(): boolean
+    + temMesaDisponivel(): boolean
+    + filaExternaEstaVazia(): boolean
 }
 
-FilaExterna -- "1..*" Aluno : "contém"
-FilaInterna -- "1..*" Aluno : "contém"
-Catraca -- "1" Aluno : "registra entrada"
-Atendimento -- "1" Aluno: "atende"
-Mesa -- "1..*" Aluno : "tem"
+FilaExterna --> "1..*" Aluno : "contém"
+FilaInterna --> "1..*" Aluno : "contém"
+Catraca --> "1" Aluno : "tem"
+Atendimento --> "0..1" Aluno: "atende"
+Mesa --> "0..*" Aluno : "tem"
 Refeitorio -- "1" FilaExterna : "possui"
 Refeitorio -- "1" Catraca : "possui"
 Refeitorio -- "1" FilaInterna : "possui"
 Refeitorio -- "1" Atendimento : "possui"
 Refeitorio -- "1..*" Mesa : "possui"
+Refeitorio --> Aluno : Utiliza
 @enduml
