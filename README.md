@@ -1,32 +1,90 @@
-**Use your preferred IDE**
+# Simulador de Fluxo de Refeitório (SFR)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Este projeto foi desenvolvido como requisito para a aprovação na disciplina de **Programação Orientada a Objetos e Engenharia de Software** do curso de **Tecnólogo em Análise e Desenvolvimento de Sistemas** do **IFPI/Campus Piripiri**. Ele consiste na modelagem de um simulador de fluxo de refeitório utilizando **TypeScript**, com base em um projeto elaborado pelo professor Dr. [Iallen Gábio](https://github.com/iallengabio). O [Documento de Especificação de Requisitos / Documento de Design da Aplicação](https://docs.google.com/document/d/1mUOEwobqiFFIAUdnUSOnNeMWUZRFbhJcW_c7mQbH5Z4/edit?usp=sharing) detalham todos os requisitos necessários para a construção da aplicação.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Estrutura das Pastas
 
-Follow these steps:
+A estrutura das pastas com os arquivos criados/alterados pela equipe está organizada da seguinte forma:
+
+```
+...
+
+📦domain
+ ┣ 📂data-management
+ ┃ ┣ 📂Entities
+ ┃ ┃ ┣ 📜simulation-parameters.ts
+ ┃ ┃ ┣ 📜simulation-results.ts
+ ┃ ┃ ┗ 📜simulation.ts
+ ┃ ┗ 📜simulation-repository.ts
+ ┣ 📂eventos
+ ┃ ┣ 📜bloquearAtendimento.ts
+ ┃ ┣ 📜BloquearCatraca.ts
+ ┃ ┣ 📜chegadaAlunoAtendimento.ts
+ ┃ ┣ 📜chegadaAlunoFilaExterna.ts
+ ┃ ┣ 📜desbloquearAtendimento.ts
+ ┃ ┣ 📜desbloquearCatraca.ts
+ ┃ ┣ 📜evento.ts
+ ┃ ┣ 📜finalizarAtendimentoAluno.ts
+ ┃ ┣ 📜maquinaDeEventos.ts
+ ┃ ┣ 📜passarAlunoMesa.ts
+ ┃ ┣ 📜passarAlunoParaCatraca.ts
+ ┃ ┣ 📜passarAlunoParaFilaInterna.ts
+ ┃ ┗ 📜sairDoRefeitorio.ts
+ ┣ 📂simulation-engine
+ ┃ ┣ 📂util
+ ┃ ┃ ┣ 📜random-generators.ts
+ ┃ ┃ ┗ 📜simulator.ts
+ ┃ ┗ 📜mock-simulator.ts
+ ┗ 📂sistema
+ ┃ ┣ 📜aluno.ts
+ ┃ ┣ 📜atendimento.ts
+ ┃ ┣ 📜catraca.ts
+ ┃ ┣ 📜fila-externa.ts
+ ┃ ┣ 📜fila-interna.ts
+ ┃ ┣ 📜mesa.ts
+ ┃ ┗ 📜refeitorio.ts
+ 
+ ...
+```
+
+## Fluxograma - Funcionamento do Refeitório
+
+A lógica para a implementação do funcionamento do refeitório está representada no seguinte fluxograma:
+
+<p align="center">
+  <img src="./public/Fluxograma_Refeitório.png" alt="Fluxograma">
+</p>
+
+## Como Configurar e Executar o Projeto
+
+Se quiser trabalhar localmente usando seu próprio IDE, pode clonar este repositório e enviar alterações. O único requisito é ter o **Node.js** e o **npm** instalados.
+
+### Passos para executar o projeto:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Passo 1: Clone o repositório usando a URL do Git do projeto.
+git clone <SUA_URL_GIT>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Passo 2: Acesse o diretório do projeto.
+cd <NOME_DO_SEU_PROJETO>
 
-# Step 3: Install the necessary dependencies.
+# Passo 3: Instale as dependências necessárias.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Passo 4: Inicie o servidor de desenvolvimento com recarregamento automático e pré-visualização instantânea.
 npm run dev
 ```
 
-## What technologies are used for this project?
+## Tecnologias Utilizadas
 
-This project is built with .
+Este projeto foi desenvolvido com as seguintes tecnologias:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://react.dev/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
+## Conclusão
+
+O projeto em questão estimulou a prática da **Programação Orientada a Objetos**, aliada a conhecimentos de **Engenharia de Software**, desempenhando um papel fundamental no crescimento acadêmico. A experiência de trabalhar em uma **perspectiva profissional**, integrando a ferramenta de gerenciamento de projetos **Jira** e a plataforma de hospedagem de código-fonte **GitHub**, elevou nosso nível de aprendizado, ampliando as possibilidades de aprofundamento na área.
